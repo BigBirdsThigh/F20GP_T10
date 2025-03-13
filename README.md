@@ -4,7 +4,7 @@
 <ul>Iona Moynihan - H00373487</ul>
 <ul>Zack Brown</ul>
 <ul>Owen Hayes</ul>
-<ul>Adam Stewart</ul>
+<ul>Adam Stuart</ul>
 
 <h2>Project Description</h2>
 <p>blahblahblah</p>
