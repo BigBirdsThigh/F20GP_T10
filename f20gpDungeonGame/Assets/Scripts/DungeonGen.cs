@@ -13,6 +13,7 @@ public class DungeonGen : MonoBehaviour
     static private int room_count = 2; // hardcoded uh oh
     private Room Room1x1 = new Room("Room1x1", 1, 1);
     private Room Room1x2 = new Room("Room1x2", 1, 2);
+    private Room StartRoom = new Room("Start", 1, 1);
     private Room[] possible_rooms = new Room[room_count];
     
     
@@ -24,6 +25,7 @@ public class DungeonGen : MonoBehaviour
         // Fill list of possible rooms, hardcoding unavoidable
         possible_rooms[0] = Room1x1;
         possible_rooms[1] = Room1x2;
+        possible_rooms[1] = StartRoom;
 
         // create empty grid
         grid = new string[grid_height, grid_width];
@@ -41,10 +43,7 @@ public class DungeonGen : MonoBehaviour
             int origin_x = Random.Range(0, grid_width);
             int origin_y = Random.Range(0, grid_height);
             
-            
-            
-            
-            
+        
             empty_count -= 1;
         }
 
