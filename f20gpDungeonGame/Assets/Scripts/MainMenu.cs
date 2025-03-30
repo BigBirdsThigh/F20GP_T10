@@ -18,6 +18,7 @@ public class MainMenu : MonoBehaviour
 
     public GameObject[] uiElements;
     public GameObject[] creditElements;
+    public GameObject[] controlsElements;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -34,6 +35,16 @@ public class MainMenu : MonoBehaviour
         {
             creditElement.SetActive(false);
             CanvasGroup canvasGroup = creditElement.GetComponent<CanvasGroup>();
+            if (canvasGroup != null)
+            {
+                canvasGroup.alpha = 0;
+            }
+        }
+        //make controls hidden by default
+        foreach (var controlsElement in controlsElements)
+        {
+            controlsElement.SetActive(false);
+            CanvasGroup canvasGroup = controlsElement.GetComponent<CanvasGroup>();
             if (canvasGroup != null)
             {
                 canvasGroup.alpha = 0;
@@ -95,6 +106,8 @@ public class MainMenu : MonoBehaviour
         SceneManager.LoadScene("MainGame"); //load game after fade
     }
 
+    
+
     public void ShowCredits()
     {
         //disable ui elements
@@ -107,6 +120,12 @@ public class MainMenu : MonoBehaviour
         //disable ui elements
         PlaySlash();
         StartCoroutine(TransFromCredits());
+    }
+
+    public void ShowControls()
+    {
+        PlaySlash();
+        StartCoroutine(TransToControls());
     }
 
     private IEnumerator TransToCredits()
@@ -207,6 +226,54 @@ public class MainMenu : MonoBehaviour
         foreach (var creditElement in creditElements)
         {
             CanvasGroup canvasGroup = creditElement.GetComponent<CanvasGroup>();
+            if (canvasGroup != null)
+            {
+                canvasGroup.alpha = 0;
+            }
+        }
+    }
+
+        private IEnumerator TransToControls()
+    {
+        float timer = 0f;
+        //set all credits to active
+        foreach (var controlsElement in controlsElements)
+        {
+            controlsElement.SetActive(true);  //set each credit to active
+            CanvasGroup canvasGroup = controlsElement.GetComponent<CanvasGroup>();
+            if (canvasGroup != null)
+            {
+                canvasGroup.alpha = 0; //make transparent
+            }
+        }
+
+        while (timer < fadeSpeed)
+        {
+            timer += Time.deltaTime;
+            foreach (var uiElement in uiElements)
+            {
+                uiElement.SetActive(false); //set each element to inactive
+                CanvasGroup canvasGroup = uiElement.GetComponent<CanvasGroup>();
+                if (canvasGroup != null)
+                {
+                    canvasGroup.alpha = Mathf.Lerp(1, 0, timer / fadeSpeed);
+                }
+            }
+            foreach (var controlsElement in controlsElements)
+            {
+                CanvasGroup canvasGroup = controlsElement.GetComponent<CanvasGroup>();
+                if (canvasGroup != null)
+                {
+                    canvasGroup.alpha = Mathf.Lerp(0, 1, timer / fadeSpeed);
+                }
+            }
+            yield return null;
+        }
+
+        //make all elements transparent after fading
+        foreach (var uiElement in uiElements)
+        {
+            CanvasGroup canvasGroup = uiElement.GetComponent<CanvasGroup>();
             if (canvasGroup != null)
             {
                 canvasGroup.alpha = 0;
