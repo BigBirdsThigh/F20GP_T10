@@ -6,6 +6,8 @@ public class FireRoom : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
+    // NEED CHECKS TO SEE IF PLAYER SHOULD BE DAMAGED BY FIRE!!
+
     private GameObject[] fireTiles;
     private bool fireScriptGoing = false;
     bool running = false;
@@ -23,6 +25,11 @@ public class FireRoom : MonoBehaviour
     void Update()
     {
         StartCoroutine(FireBehaviour());
+
+        if (fireTiles.Length == 0)
+        {
+            fireTiles = GameObject.FindGameObjectsWithTag("FireTile");
+        }
     }
 
     private IEnumerator FireBehaviour()
@@ -32,6 +39,7 @@ public class FireRoom : MonoBehaviour
             yield break;
         }
         running = true;
+        Debug.Log(fireTiles.Length);
 
         // time between fire turning off and on, can change later
         int delay = Random.Range(5, 7);
