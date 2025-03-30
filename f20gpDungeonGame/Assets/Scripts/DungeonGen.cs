@@ -13,7 +13,7 @@ public class DungeonGen : MonoBehaviour
     private (int,int)[] adjacent_rooms = new (int,int)[4];
     
     // Room variables
-    static private int room_count = 2; // hardcoded uh oh
+    static private int room_count = 6; // hardcoded uh oh
     public GameObject Door_obj;
 
     public GameObject StartRoom_obj;
@@ -22,7 +22,17 @@ public class DungeonGen : MonoBehaviour
     private Room Room1x1;
     public GameObject Room1x2_obj;
     private Room Room1x2;
-    
+
+    // fire rooms
+    public GameObject Room1x1_Fire_1_obj;
+    private Room Room1x1_Fire_1;
+    public GameObject Room1x1_Fire_2_obj;
+    private Room Room1x1_Fire_2;
+    public GameObject Room1x2_Fire_1_obj;
+    private Room Room1x2_Fire_1;
+    public GameObject Room1x2_Fire_2_obj;
+    private Room Room1x2_Fire_2;
+
     private Room[] possible_rooms = new Room[room_count];
     
     
@@ -35,10 +45,21 @@ public class DungeonGen : MonoBehaviour
         // Fill list of possible rooms, hardcoding unavoidable
         StartRoom = new Room("StartRoom", "s", 1, 1, StartRoom_obj);
 
+        //test rooms
         Room1x1 = new Room("Room1x1", "1", 1, 1, Room1x1_obj);
         possible_rooms[0] = Room1x1;
         Room1x2 = new Room("Room1x2", "2", 1, 2, Room1x2_obj);
         possible_rooms[1] = Room1x2;
+
+        //fire rooms
+        Room1x1_Fire_1 = new Room("Room1x1_Fire_1", "3", 1, 1, Room1x1_Fire_1_obj);
+        possible_rooms[2] = Room1x1_Fire_1;
+        Room1x1_Fire_2 = new Room("Room1x1_Fire_2", "4", 1, 1, Room1x1_Fire_2_obj);
+        possible_rooms[3] = Room1x1_Fire_2;
+        Room1x2_Fire_1 = new Room("Room1x2_Fire_1", "5", 1, 2, Room1x2_Fire_1_obj);
+        possible_rooms[4] = Room1x2_Fire_1;
+        Room1x2_Fire_2 = new Room("Room1x2_Fire_2", "6", 1, 2, Room1x2_Fire_2_obj);
+        possible_rooms[5] = Room1x2_Fire_2;
 
         // create empty grid
         grid = new string[grid_height, grid_width];
