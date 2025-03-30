@@ -13,7 +13,7 @@ public class DungeonGen : MonoBehaviour
     private (int,int)[] adjacent_rooms = new (int,int)[4];
     
     // Room variables
-    static private int room_count = 6; // hardcoded uh oh
+    static private int room_count = 8; // hardcoded uh oh
     public GameObject Door_obj;
 
     public GameObject StartRoom_obj;
@@ -32,6 +32,12 @@ public class DungeonGen : MonoBehaviour
     private Room Room1x2_Fire_1;
     public GameObject Room1x2_Fire_2_obj;
     private Room Room1x2_Fire_2;
+
+    // jump rooms
+    public GameObject JumpRoom1x1_obj;
+    private Room JumpRoom1x1;
+    public GameObject JumpRoom1x2_obj;
+    private Room JumpRoom1x2;
 
     private Room[] possible_rooms = new Room[room_count];
     
@@ -60,6 +66,12 @@ public class DungeonGen : MonoBehaviour
         possible_rooms[4] = Room1x2_Fire_1;
         Room1x2_Fire_2 = new Room("Room1x2_Fire_2", "6", 1, 2, Room1x2_Fire_2_obj);
         possible_rooms[5] = Room1x2_Fire_2;
+
+        //jump rooms
+        JumpRoom1x1 = new Room("JumpRoom1x1", "j", 1, 1, JumpRoom1x1_obj);
+        possible_rooms[6] = JumpRoom1x1;
+        JumpRoom1x2 = new Room("JumpRoom1x2", "i", 1, 2, JumpRoom1x2_obj);
+        possible_rooms[7] = JumpRoom1x2;
 
         // create empty grid
         grid = new string[grid_height, grid_width];
@@ -191,7 +203,7 @@ public class DungeonGen : MonoBehaviour
             Instantiate(Door_obj, door_pos, Quaternion.Euler(new Vector3(0, door_rotation, 0)));
 
             foreach (GameObject go in GameObject.FindGameObjectsWithTag("DoorWall")) {
-                if (Vector3.Distance(door_pos, go.transform.position) < 10)
+                if (Vector3.Distance(door_pos, go.transform.position) < 5)
                 {
                     Destroy(go);
                 }
