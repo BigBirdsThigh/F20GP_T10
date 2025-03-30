@@ -35,13 +35,13 @@ public class DungeonGen : MonoBehaviour
 
     private Room[] possible_rooms = new Room[room_count];
     
-    
-    
     // Other variables
     // go here
 
     void Start()
     {
+        //Door_obj.GetComponent<Animator>().Play("Idle_closedDoor");
+
         // Fill list of possible rooms, hardcoding unavoidable
         StartRoom = new Room("StartRoom", "s", 1, 1, StartRoom_obj);
 
