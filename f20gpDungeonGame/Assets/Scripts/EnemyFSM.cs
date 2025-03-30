@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class EnemyFSM : MonoBehaviour
 {
@@ -12,7 +13,7 @@ public class EnemyFSM : MonoBehaviour
     private bool hasQueuedForAttack = false;
     private float idleTimer = 0f;
     private float timeBeforeQueue = 1.5f; 
-
+    private Animator anim;
 
     public int numRays = 7; // Number of rays to cast in FOV
     public float rayDistance = 2.5f; // How far the rays shoot
@@ -24,9 +25,16 @@ public class EnemyFSM : MonoBehaviour
     private float maxApproachTime = 5f;
     private EnemyGroupManager manager;
     private bool isAttacking;
+    private WeaponHitbox swordHitbox;
+
 
     private void Start()
     {
+        anim = GetComponentInChildren<Animator>();
+        swordHitbox = GetComponentInChildren<WeaponHitbox>();
+        if (swordHitbox != null)
+            swordHitbox.DisableHitbox(); // make sure it's off by default
+
         manager = FindObjectOfType<EnemyGroupManager>();
         if (manager != null)
             manager.RegisterEnemy(this);
@@ -34,21 +42,50 @@ public class EnemyFSM : MonoBehaviour
         Player_Movement playerScript = FindObjectOfType<Player_Movement>();
         if (playerScript != null)
             targetPlayer = playerScript.transform;
+
+        BoxCollider col = GetComponent<BoxCollider>();
+        if (col != null)
+        {
+            Renderer meshRenderer = GetComponentInChildren<Renderer>();
+            if (meshRenderer != null)
+            {
+                Bounds bounds = meshRenderer.bounds;
+
+                Vector3 size = col.size;
+                size.y = bounds.size.y; // Set only height
+                col.size = size;
+
+                Vector3 center = col.center;
+                center.y = bounds.center.y - transform.position.y;
+                col.center = center;
+            }
+        }
+
     }
 
 
     private void Update()
     {
+        RotateTowardsTarget();
+
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            anim.SetBool("isWalking", true);
+            anim.SetBool("isAttacking", false);
+            anim.SetInteger("AttackIndex", 1);
+            anim.SetTrigger("AttackTrigger");
+        }
+
         switch (currentState)
         {
             case EnemyState.Idle:
                 MoveToTarget();
-                RotateTowardsTarget();
+                // RotateTowardsTarget();
                 HandleIdleAttackQueueing();
                 break;
 
             case EnemyState.Attacking:
-                RotateTowardsTarget();
+                // RotateTowardsTarget();
                 HandleAttackState();
                 break;
         }
@@ -74,22 +111,34 @@ public class EnemyFSM : MonoBehaviour
         if (targetObject == null) return;
 
         Vector3 targetPosition = targetObject.position;
-        targetPosition.y = transform.position.y; // Keep Y constant to avoid bouncing
+        targetPosition.y = transform.position.y;
 
         float distance = Vector3.Distance(transform.position, targetPosition);
 
         if (distance > stoppingThreshold)
         {
             Vector3 moveDirection = (targetPosition - transform.position).normalized;
-
-        
             Vector3 avoidanceVector = GetBoidAvoidance();
-            moveDirection = Vector3.Lerp(moveDirection, moveDirection + avoidanceVector, 0.8f); // Blend movement & avoidance
-            moveDirection.Normalize(); // Ensure it's a unit vector
+            moveDirection = Vector3.Lerp(moveDirection, moveDirection + avoidanceVector, 0.8f);
+            moveDirection.Normalize();
 
             transform.position += moveDirection * moveSpeed * Time.deltaTime;
+
+            if (anim != null)
+            {
+                anim.SetBool("isWalking", true); // Set isWalking true when moving
+            }
         }
+        else
+        {
+            if (anim != null)
+            {
+                anim.SetBool("isWalking", false); // Set false when stopped
+            }
+        }
+
     }
+
 
 
     private void RotateTowardsTarget()
@@ -105,6 +154,8 @@ public class EnemyFSM : MonoBehaviour
     }
 
 
+    private bool hasAttacked = false; // to not repeat attacks
+
     private void HandleAttackState()
     {
         if (targetPlayer == null)
@@ -112,19 +163,43 @@ public class EnemyFSM : MonoBehaviour
             FinishAttack();
             return;
         }
-
+        
         float dist = Vector3.Distance(transform.position, targetPlayer.position);
+        if (dist > attackRange)
+        {
+            anim.SetBool("isWalking", true);
+        }
+        else
+        {
+            anim.SetBool("isWalking", false);
+        }
 
         if (dist <= attackRange)
         {
-            Debug.Log("Enemy reached player!");
-            FinishAttack();
+            if (!hasAttacked && anim != null)
+            {
+                anim.SetBool("isWalking", false);
+                anim.SetBool("isAttacking", true); // Stay in combat state
+
+                int attackIndex = Random.Range(0, 2);
+                anim.SetInteger("AttackIndex", attackIndex);
+                anim.SetTrigger("AttackTrigger");
+
+                hasAttacked = true;
+                moveSpeed = 0f;
+                StartCoroutine(AttackAndReturnToIdle(attackIndex));
+            }
+
             return;
         }
 
+        // Still approaching player
         transform.position = Vector3.MoveTowards(transform.position, targetPlayer.position, moveSpeed * Time.deltaTime);
-        approachTimer += Time.deltaTime;
 
+        if (anim != null)
+            anim.SetBool("isWalking", true);
+
+        approachTimer += Time.deltaTime;
         if (approachTimer >= maxApproachTime)
         {
             Debug.Log("Enemy failed to reach player in time.");
@@ -132,16 +207,69 @@ public class EnemyFSM : MonoBehaviour
         }
     }
 
+
+    private IEnumerator AttackAndReturnToIdle(int index)
+    {
+        float fps = 60f;
+        if(index == 0){
+            
+            yield return new WaitForSeconds(10f / fps);
+
+            if (swordHitbox != null)
+                swordHitbox.EnableHitbox();
+
+            
+            yield return new WaitForSeconds((36f - 10f) / fps);
+
+            if (swordHitbox != null)
+                swordHitbox.DisableHitbox();
+
+            
+            yield return new WaitForSeconds((60f - 36f) / fps);
+        }else{
+            yield return new WaitForSeconds(7f / fps);
+
+            if (swordHitbox != null)
+                swordHitbox.EnableHitbox();
+
+            
+            yield return new WaitForSeconds((31f - 7f) / fps); // wait from frame 7 to 23
+
+            if (swordHitbox != null)
+                swordHitbox.DisableHitbox();
+
+            
+            yield return new WaitForSeconds((69f - 31f) / fps); // wait out the rest of the anim
+        }
+        
+
+        FinishAttack();
+    }
+
+
+
+
     private void FinishAttack()
     {
         currentState = EnemyState.Idle;
         isAttacking = false;
+        hasAttacked = false;
         idleTimer = 0f;
         hasQueuedForAttack = false;
+
+        if (anim != null)
+        {
+            anim.SetBool("isWalking", false);
+            anim.SetBool("isAttacking", false); // Exit combat state
+        }
+
+        moveSpeed = 1.5f;
 
         if (manager != null)
             manager.NotifyAttackFinished(this);
     }
+
+
 
     private Vector3 GetBoidAvoidance()
 {
@@ -213,8 +341,15 @@ public class EnemyFSM : MonoBehaviour
         idleTimer = 0f;
         hasQueuedForAttack = false;
 
+        if (anim != null)
+        {
+            anim.SetBool("isWalking", true); // Start walking to player
+            anim.SetBool("isAttacking", true); // Combat stance
+        }
+
         Debug.Log("Enemy entering attack state!");
     }
+
 
     public EnemyState GetState()
     {

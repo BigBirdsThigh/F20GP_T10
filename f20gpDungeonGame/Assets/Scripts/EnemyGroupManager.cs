@@ -17,6 +17,8 @@ public class EnemyGroupManager : MonoBehaviour
     public float maxRingRadius = 8f;
     public float radiusLerpSpeed = 1f;
     public int framesRequiredToShrink = 10;
+    [Header("Debug")]
+    [SerializeField] private bool showVisualNodes = false;
 
     private float ringRadius;
     private int successfulPlacementFrames = 0;
@@ -119,12 +121,27 @@ public class EnemyGroupManager : MonoBehaviour
                     if (IsPositionValid(pos, newPositions))
                     {
                         newPositions.Add(pos);
-                        GameObject marker = Instantiate(positionPlaceholderPrefab, pos, Quaternion.identity);
-                        ringNodes.Add(marker.transform);
+
+                        if (showVisualNodes && positionPlaceholderPrefab != null)
+                        {
+                            GameObject marker = Instantiate(positionPlaceholderPrefab, pos, Quaternion.identity);
+                            ringNodes.Add(marker.transform);
+                        }
+                        else
+                        {
+                            // Create a dummy Transform just for logic purposes
+                            Transform dummy = new GameObject("Node_" + i).transform;
+                            dummy.position = pos;
+                            dummy.gameObject.hideFlags = HideFlags.HideAndDontSave; 
+                            ringNodes.Add(dummy);
+                        }
+
                         placed = true;
                         nodesPlaced++;
                         break;
                     }
+
+
                 }
                 if (placed) break;
             }
@@ -203,7 +220,7 @@ public class EnemyGroupManager : MonoBehaviour
         {
             currentAttacker = null;
 
-            // Apply randomized delay BEFORE next attacker can be chosen
+            // Apply randomised delay BEFORE next attacker can be chosen
             float delay = Random.Range(minAttackDelay, maxAttackDelay);
             nextAttackAllowedTime = Time.time + delay;
         }
