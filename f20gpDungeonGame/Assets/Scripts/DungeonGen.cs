@@ -13,10 +13,16 @@ public class DungeonGen : MonoBehaviour
     private (int,int)[] adjacent_rooms = new (int,int)[4];
     
     // Room variables
-    static private int room_count = 3; // hardcoded uh oh
-    private Room Room1x1 = new Room("Room1x1", 1, 1);
-    private Room Room1x2 = new Room("Room1x2", 1, 2);
-    private Room StartRoom = new Room("Start", 1, 1);
+    static private int room_count = 2; // hardcoded uh oh
+    public GameObject Door_obj;
+
+    public GameObject StartRoom_obj;
+    private Room StartRoom;
+    public GameObject Room1x1_obj;
+    private Room Room1x1;
+    public GameObject Room1x2_obj;
+    private Room Room1x2;
+    
     private Room[] possible_rooms = new Room[room_count];
     
     
@@ -27,10 +33,12 @@ public class DungeonGen : MonoBehaviour
     void Start()
     {
         // Fill list of possible rooms, hardcoding unavoidable
-        
-        possible_rooms[0] = StartRoom;
-        possible_rooms[1] = Room1x1;
-        possible_rooms[2] = Room1x2;
+        StartRoom = new Room("StartRoom", "s", 1, 1, StartRoom_obj);
+
+        Room1x1 = new Room("Room1x1", "1", 1, 1, Room1x1_obj);
+        possible_rooms[0] = Room1x1;
+        Room1x2 = new Room("Room1x2", "2", 1, 2, Room1x2_obj);
+        possible_rooms[1] = Room1x2;
 
         // create empty grid
         grid = new string[grid_height, grid_width];
@@ -59,12 +67,13 @@ public class DungeonGen : MonoBehaviour
 
             // Chose a room and location for the room
             if (first_room) 
-                room_choice = possible_rooms[0];
+                room_choice = StartRoom.copy();
             else
-                room_choice  = possible_rooms[Random.Range(0, possible_rooms.Length)]; // todo copy not ref
+                room_choice  = possible_rooms[Random.Range(0, possible_rooms.Length)].copy(); // todo copy not ref
             if (room_choice.Height == 2) {
-                rotation = ROTATIONS[Random.Range(0,2)];
+                room_choice.Rotation = rotation = ROTATIONS[Random.Range(0,2)];
             }
+            string letter = room_choice.Letter;
             
             int origin_x = Random.Range(0, grid_width);
             int origin_y = Random.Range(0, grid_height);
@@ -107,24 +116,24 @@ public class DungeonGen : MonoBehaviour
             bool direction_valid = true;
             if (room_choice.Height == 2) { // if room is a 1x2, check that the extra space is unoccupied
                 if (rotation == 0) {
-                    if (BoundsCheck(origin_y+1,origin_x) == false || grid[origin_y+1,origin_x] != "")
+                    if (BoundsCheck(origin_y-1,origin_x) == false || grid[origin_y-1,origin_x] != "")
                         direction_valid = false; 
                     else {
-                        grid[origin_y,origin_x] = "#"; 
-                        grid[origin_y+1,origin_x] = "#"; 
+                        grid[origin_y,origin_x] = letter; 
+                        grid[origin_y-1,origin_x] = letter; 
                         empty_count-=2; // mark the room in the grid
                     }
                 } else if (rotation == 90) {
                     if (BoundsCheck(origin_y,origin_x+1) == false || grid[origin_y,origin_x+1] != "")
                         direction_valid = false; 
                     else {
-                        grid[origin_y,origin_x] = "#"; 
-                        grid[origin_y,origin_x+1] = "#"; 
+                        grid[origin_y,origin_x] = letter; 
+                        grid[origin_y,origin_x+1] = letter; 
                         empty_count-=2; // mark the room in the grid
                     }
                 }
             } else {
-                grid[origin_y,origin_x] = "#"; empty_count--;
+                grid[origin_y,origin_x] = letter; empty_count--;
             }
 
             if (direction_valid) { // room placement is garuanteeded to be ok
@@ -142,9 +151,31 @@ public class DungeonGen : MonoBehaviour
 
         PrintGrid(grid);
 
-        
-    
 
+        // Add the rooms and doors to the scene
+        foreach (Room room in rooms) {
+            //Quaternion quat = Quaternion.identity;
+            //quat.y = room.Rotation;
+            Instantiate(room.Obj, new Vector3 (room.Origin.Item2*45, 0, room.Origin.Item1*-45), Quaternion.Euler(new Vector3(0, room.Rotation, 0)));
+        }
+
+        foreach(((int,int),(int,int)) br in bridges) { 
+            float door_x = ((float) br.Item1.Item2 + (float) br.Item2.Item2)/2;
+            float door_y = ((float) br.Item1.Item1 + (float) br.Item2.Item1)/2;
+            Vector3 door_pos = new Vector3 (door_x*45, 3, door_y*-45);
+            int door_rotation = 0;
+            if (br.Item1.Item2 != br.Item2.Item2) { // if x coords are not equal door must be rotated the other way
+                door_rotation = 90;
+            }
+            Instantiate(Door_obj, door_pos, Quaternion.Euler(new Vector3(0, door_rotation, 0)));
+
+            foreach (GameObject go in GameObject.FindGameObjectsWithTag("DoorWall")) {
+                if (Vector3.Distance(door_pos, go.transform.position) < 10)
+                {
+                    Destroy(go);
+                }
+            }
+        }
     
     }
 
@@ -168,7 +199,7 @@ public class DungeonGen : MonoBehaviour
         Debug.Log(grid_text);
 
         foreach(((int,int),(int,int)) br in bridges) { 
-          Debug.Log(br); 
+            Debug.Log(br); 
         }
 
         

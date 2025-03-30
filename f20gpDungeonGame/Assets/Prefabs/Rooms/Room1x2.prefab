@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 6950420959781333599}
   - component: {fileID: 8177874420083421379}
   m_Layer: 0
-  m_Name: Door
-  m_TagString: Untagged
+  m_Name: DoorWall
+  m_TagString: DoorWall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -65,7 +65,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b8c2a88520cb94b43a26a437d412913c, type: 2}
+  - {fileID: 2100000, guid: 73c176f402d2c2f4d929aa5da7585d17, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -770,8 +770,8 @@ GameObject:
   - component: {fileID: 6614532537228926503}
   - component: {fileID: 6497780790638895338}
   m_Layer: 0
-  m_Name: Door (1)
-  m_TagString: Untagged
+  m_Name: DoorWall (1)
+  m_TagString: DoorWall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -822,7 +822,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b8c2a88520cb94b43a26a437d412913c, type: 2}
+  - {fileID: 2100000, guid: 73c176f402d2c2f4d929aa5da7585d17, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1036,8 +1036,8 @@ GameObject:
   - component: {fileID: 2167088971382591990}
   - component: {fileID: 1133958109249748735}
   m_Layer: 0
-  m_Name: Door (5)
-  m_TagString: Untagged
+  m_Name: DoorWall (5)
+  m_TagString: DoorWall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1088,7 +1088,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b8c2a88520cb94b43a26a437d412913c, type: 2}
+  - {fileID: 2100000, guid: 73c176f402d2c2f4d929aa5da7585d17, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1144,8 +1144,8 @@ GameObject:
   - component: {fileID: 3648856710735537737}
   - component: {fileID: 5959378460669951165}
   m_Layer: 0
-  m_Name: Door (2)
-  m_TagString: Untagged
+  m_Name: DoorWall (2)
+  m_TagString: DoorWall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1196,7 +1196,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b8c2a88520cb94b43a26a437d412913c, type: 2}
+  - {fileID: 2100000, guid: 73c176f402d2c2f4d929aa5da7585d17, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1252,8 +1252,8 @@ GameObject:
   - component: {fileID: 6530714401523316391}
   - component: {fileID: 2354617994050057161}
   m_Layer: 0
-  m_Name: Door (4)
-  m_TagString: Untagged
+  m_Name: DoorWall (4)
+  m_TagString: DoorWall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1304,7 +1304,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b8c2a88520cb94b43a26a437d412913c, type: 2}
+  - {fileID: 2100000, guid: 73c176f402d2c2f4d929aa5da7585d17, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1576,8 +1576,8 @@ GameObject:
   - component: {fileID: 6033092751180575663}
   - component: {fileID: 1121028433927930085}
   m_Layer: 0
-  m_Name: Door (3)
-  m_TagString: Untagged
+  m_Name: DoorWall (3)
+  m_TagString: DoorWall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1628,7 +1628,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b8c2a88520cb94b43a26a437d412913c, type: 2}
+  - {fileID: 2100000, guid: 73c176f402d2c2f4d929aa5da7585d17, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
