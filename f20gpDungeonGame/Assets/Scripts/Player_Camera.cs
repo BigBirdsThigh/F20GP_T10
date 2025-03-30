@@ -42,14 +42,24 @@ public class Player_Camera : MonoBehaviour
         rotX -= mY; //up and down
 
         rotX = Mathf.Clamp(rotX, minLookupAngle, maxLookupAngle); //limit the x rotation, should be modifiable in inspector
+        
         Quaternion cameraRotation = Quaternion.Euler(rotX, rotY, 0f); //rotate the camera position along the y and x axis
-
         Vector3 targetOffset = TP_Offset;
-        Vector3 cameraRotationFinal = cameraRotation * targetOffset; //add the offset to the initial camera position to get the final position
+        Vector3 correctCamPos = player.transform.position + (cameraRotation * targetOffset);
+        //Vector3 cameraRotationFinal = cameraRotation * targetOffset; //add the offset to the initial camera position to get the final position
 
-        this.transform.position = Vector3.Slerp(this.transform.position, player.transform.position + cameraRotationFinal, Time.deltaTime * focusSpeed);
-        this.transform.LookAt(player.transform.position); //look at player
+        RaycastHit hit;
+        if (Physics.Linecast(player.transform.position, correctCamPos, out hit))
+        {
+            this.transform.position = hit.point + hit.normal * 0.2f; //0.2f offset to stop clipping
+        }
+        else 
+        {
+           this.transform.position = Vector3.Slerp(this.transform.position, correctCamPos, Time.deltaTime * focusSpeed);
+        }
 
+        //this.transform.position = Vector3.Slerp(this.transform.position, player.transform.position + cameraRotationFinal, Time.deltaTime * focusSpeed);
+        this.transform.LookAt(player.transform.position); //look at player 
     }
 
     void AdjustFOV()
