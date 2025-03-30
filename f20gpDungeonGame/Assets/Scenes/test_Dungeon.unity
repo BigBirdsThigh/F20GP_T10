@@ -1233,7 +1233,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3296360596419214845, guid: 9ec3a7da7b838684f92634072798ba6f, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4532261553578666498, guid: 9ec3a7da7b838684f92634072798ba6f, type: 3}
       propertyPath: m_TagString
@@ -1372,6 +1372,10 @@ PrefabInstance:
     - target: {fileID: 3384303518669868474, guid: ac3149923f67e9f498d7d0caf55e339d, type: 3}
       propertyPath: m_Name
       value: StartRoom
+      objectReference: {fileID: 0}
+    - target: {fileID: 3384303518669868474, guid: ac3149923f67e9f498d7d0caf55e339d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8056115941242741548, guid: ac3149923f67e9f498d7d0caf55e339d, type: 3}
       propertyPath: m_LocalPosition.x
