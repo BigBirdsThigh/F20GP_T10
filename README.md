@@ -2,7 +2,7 @@
 
 <h2>Team Members</h2>
 <ul>Iona Moynihan - H00373487</ul>
-<ul>Zack Brown</ul>
+<ul>Zack Brown - H00372987</ul>
 <ul>Owen Hayes</ul>
 <ul>Adam Stuart</ul>
 
