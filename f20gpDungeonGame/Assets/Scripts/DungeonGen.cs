@@ -184,9 +184,9 @@ public class DungeonGen : MonoBehaviour
             float door_x = ((float) br.Item1.Item2 + (float) br.Item2.Item2)/2;
             float door_y = ((float) br.Item1.Item1 + (float) br.Item2.Item1)/2;
             Vector3 door_pos = new Vector3 (door_x*45, 3, door_y*-45);
-            int door_rotation = 0;
+            int door_rotation = 90;
             if (br.Item1.Item2 != br.Item2.Item2) { // if x coords are not equal door must be rotated the other way
-                door_rotation = 90;
+                door_rotation = 0;
             }
             Instantiate(Door_obj, door_pos, Quaternion.Euler(new Vector3(0, door_rotation, 0)));
 
