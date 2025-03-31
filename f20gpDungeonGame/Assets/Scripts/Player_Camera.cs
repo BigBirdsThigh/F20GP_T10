@@ -19,6 +19,8 @@ public class Player_Camera : MonoBehaviour
     public float maxFOV = -1f;
     public float minFOV = -4.5f;
 
+    public float zoomInOffset = 0.2f;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -51,7 +53,7 @@ public class Player_Camera : MonoBehaviour
         RaycastHit hit;
         if (Physics.Linecast(player.transform.position, correctCamPos, out hit))
         {
-            this.transform.position = hit.point + hit.normal * 0.2f; //0.2f offset to stop clipping
+            this.transform.position = hit.point + hit.normal * zoomInOffset; //0.2f offset to stop clipping
         }
         else 
         {
