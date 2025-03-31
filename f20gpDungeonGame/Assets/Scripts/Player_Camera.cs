@@ -8,6 +8,7 @@ public class Player_Camera : MonoBehaviour
     public float rotY = 0f; //y axis from the mouse input
 
     private GameObject player;
+    public DungeonGen dg;
     
     public Vector3 TP_Offset = Vector3.zero; //set this in the inspector tab- it is an vector where we can modify where the camera's position will be
     public float fov = -4f; //how close the third person camera is to the player
@@ -24,12 +25,13 @@ public class Player_Camera : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player"); //get the player object from the scene
+
     }
 
     //late update to prevent glitchy camera- as movement is done in fixed update
     void LateUpdate()
     {
+        player = dg.getPlayerInstance();
         ThirdPersonCamera();
         AdjustFOV();
     }
@@ -47,7 +49,7 @@ public class Player_Camera : MonoBehaviour
         
         Quaternion cameraRotation = Quaternion.Euler(rotX, rotY, 0f); //rotate the camera position along the y and x axis
         Vector3 targetOffset = TP_Offset;
-        Vector3 correctCamPos = player.transform.position + (cameraRotation * targetOffset);
+        Vector3 correctCamPos = player.transform.position + (cameraRotation * targetOffset);    
         //Vector3 cameraRotationFinal = cameraRotation * targetOffset; //add the offset to the initial camera position to get the final position
 
         RaycastHit hit;
