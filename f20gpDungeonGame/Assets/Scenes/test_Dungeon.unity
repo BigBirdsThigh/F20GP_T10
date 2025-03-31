@@ -1854,6 +1854,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: JumpRoom1x1
       objectReference: {fileID: 0}
+    - target: {fileID: 4071525565695726265, guid: 74443954eead47a4180b8468c22f2026, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5560741132498659371, guid: 74443954eead47a4180b8468c22f2026, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

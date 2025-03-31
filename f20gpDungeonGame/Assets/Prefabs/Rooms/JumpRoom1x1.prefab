@@ -2303,7 +2303,7 @@ GameObject:
   - component: {fileID: 2023299284834071688}
   m_Layer: 0
   m_Name: DoorWall (10)
-  m_TagString: DoorWall
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3502,7 +3502,7 @@ GameObject:
   - component: {fileID: 6957495012642481062}
   m_Layer: 0
   m_Name: DoorWall (12)
-  m_TagString: DoorWall
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5137,7 +5137,7 @@ GameObject:
   - component: {fileID: 2914582960959867240}
   m_Layer: 0
   m_Name: DoorWall (8)
-  m_TagString: DoorWall
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -13473,7 +13473,7 @@ GameObject:
   - component: {fileID: 4975885268611619317}
   m_Layer: 0
   m_Name: DoorWall (15)
-  m_TagString: DoorWall
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
