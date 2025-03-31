@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class Player_Movement : MonoBehaviour
 {
@@ -37,6 +38,7 @@ public class Player_Movement : MonoBehaviour
         //place the player in the spawn room
         gameObject.transform.localPosition = dg.getSpawnRoom();
         Debug.Log(dg.getSpawnRoom());
+        SetChildrenRotation();
     }
 
     // Update is called once per frame
@@ -45,18 +47,29 @@ public class Player_Movement : MonoBehaviour
         MovementChecker(); //checks 'isMoving' either True or False
         PlayerSpeed(); //increases player speed if LEFT SHIFT held
         CheckGrounded(); //check if player is on the ground for jumping
-        Jump(); //jumping for the player, done pressing spacebar
     }
 
     void FixedUpdate() //fixed update for handling in game physics with rigidbody movement
     {
         BasicMovement();
         RotationMovement();
+        Jump(); //jumping for the player, done pressing spacebar
+    }
+
+    void SetChildrenRotation()
+    {
+        //used to fix rotation bug
+        foreach (Transform child in transform)
+        {
+            Vector3 currentRotation = child.eulerAngles;
+            child.rotation = Quaternion.Euler(currentRotation.x, currentRotation.y, 90f);//force z axis to be 90
+        }
     }
 
     void BasicMovement()
     {
-        Vector3 moveDirection = transform.right * Input.GetAxis("Vertical") + transform.forward * -Input.GetAxis("Horizontal"); //reverse horizontal movement
+        //Vector3 moveDirection = transform.right * Input.GetAxis("Vertical") + transform.forward * -Input.GetAxis("Horizontal"); //reverse horizontal movement
+        Vector3 moveDirection = transform.forward * Input.GetAxis("Vertical") + transform.right * Input.GetAxis("Horizontal");
         rb.linearVelocity = new Vector3(moveDirection.x * currentMovementSpeed, rb.linearVelocity.y, moveDirection.z * currentMovementSpeed);
     }
 
@@ -142,7 +155,9 @@ public class Player_Movement : MonoBehaviour
     {
         if (isGrounded && Input.GetKeyDown(KeyCode.Space))
         {
-            rb.linearVelocity = new Vector3(rb.linearVelocity.x, Mathf.Sqrt(2 * jumpHeight * fallMult), rb.linearVelocity.z);
+            Debug.Log("jump pressed!");
+            //rb.linearVelocity = new Vector3(rb.linearVelocity.x, Mathf.Sqrt(2 * jumpHeight * fallMult), rb.linearVelocity.z);
+            rb.AddForce(Vector3.up * Mathf.Sqrt(2 * jumpHeight * -Physics.gravity.y), ForceMode.Force);
         }
         if(!isGrounded)
         {

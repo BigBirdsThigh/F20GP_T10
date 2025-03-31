@@ -53,11 +53,18 @@ public class Player_Camera : MonoBehaviour
         RaycastHit hit;
         if (Physics.Linecast(player.transform.position, correctCamPos, out hit))
         {
-            this.transform.position = hit.point + hit.normal * zoomInOffset; //0.2f offset to stop clipping
-        }
+            if(!hit.collider.CompareTag("Player") || !hit.collider.CompareTag("Ground"))
+            {
+                this.transform.position = Vector3.Slerp(this.transform.position, correctCamPos, Time.deltaTime * focusSpeed);
+            }
+            else
+            {
+                this.transform.position = hit.point + hit.normal * zoomInOffset; //offset to stop clipping
+            }
+        } 
         else 
         {
-           this.transform.position = Vector3.Slerp(this.transform.position, correctCamPos, Time.deltaTime * focusSpeed);
+            this.transform.position = Vector3.Slerp(this.transform.position, correctCamPos, Time.deltaTime * focusSpeed);
         }
 
         //this.transform.position = Vector3.Slerp(this.transform.position, player.transform.position + cameraRotationFinal, Time.deltaTime * focusSpeed);
