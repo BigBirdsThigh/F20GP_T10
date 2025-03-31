@@ -43,9 +43,24 @@ public class EnemyGroupManager : MonoBehaviour
 
     void Start()
     {
+        // Auto-assign player if not manually set
+        if (player == null)
+        {
+            GameObject found = GameObject.FindGameObjectWithTag("Player");
+            if (found != null)
+            {
+                player = found.transform;
+            }
+            else
+            {
+                Debug.LogWarning("[EnemyGroupManager] No GameObject tagged 'Player' found in the scene.");
+            }
+        }
+
         ringRadius = baseRingRadius;
         ClearRing();
     }
+
 
     void Update()
     {

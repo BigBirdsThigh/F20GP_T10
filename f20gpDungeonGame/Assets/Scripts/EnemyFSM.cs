@@ -26,10 +26,12 @@ public class EnemyFSM : MonoBehaviour
     private EnemyGroupManager manager;
     private bool isAttacking;
     private WeaponHitbox swordHitbox;
+    private float baseSpeed;
 
 
     private void Start()
     {
+        baseSpeed = moveSpeed;
         anim = GetComponentInChildren<Animator>();
         swordHitbox = GetComponentInChildren<WeaponHitbox>();
         if (swordHitbox != null)
@@ -158,6 +160,7 @@ public class EnemyFSM : MonoBehaviour
 
     private void HandleAttackState()
     {
+        moveSpeed = 10.6f;
         if (targetPlayer == null)
         {
             FinishAttack();
@@ -263,7 +266,7 @@ public class EnemyFSM : MonoBehaviour
             anim.SetBool("isAttacking", false); // Exit combat state
         }
 
-        moveSpeed = 1.5f;
+        moveSpeed = baseSpeed;
 
         if (manager != null)
             manager.NotifyAttackFinished(this);
