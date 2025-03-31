@@ -877,6 +877,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   grid_width: 5
   grid_height: 5
+  player: {fileID: 820236479}
   Door_obj: {fileID: 919132149155446097, guid: facd11f7b783fd04c909b2215d880f43, type: 3}
   StartRoom_obj: {fileID: 3384303518669868474, guid: ac3149923f67e9f498d7d0caf55e339d, type: 3}
   Room1x1_obj: {fileID: 6655617814020474646, guid: 0e20231ccc381bd48b61e7e1558e9bc7, type: 3}
@@ -887,6 +888,7 @@ MonoBehaviour:
   Room1x2_Fire_2_obj: {fileID: 5904146274192457249, guid: aaf582085cdb89d4fa7a70cbf054c4d9, type: 3}
   JumpRoom1x1_obj: {fileID: 4071525565695726265, guid: 74443954eead47a4180b8468c22f2026, type: 3}
   JumpRoom1x2_obj: {fileID: 1914749515237400370, guid: da9cb126e92393549a8557cf1386a9e3, type: 3}
+  key_obj: {fileID: 4222302903856259157, guid: 17182d8c6cd300b47b1296817722cd5d, type: 3}
 --- !u!4 &619823852
 Transform:
   m_ObjectHideFlags: 0
@@ -962,6 +964,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4ace154d29cf054eb09b102fe127cc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dg: {fileID: 619823851}
   currentMovementSpeed: 0
   walkSpeed: 10
   runSpeed: 20

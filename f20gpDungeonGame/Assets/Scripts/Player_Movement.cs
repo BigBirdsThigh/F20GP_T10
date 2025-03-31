@@ -4,6 +4,7 @@ public class Player_Movement : MonoBehaviour
 {
 
     private Rigidbody rb; //the player rigidbody
+    public DungeonGen dg;
 
     //movement speed variables
     public float currentMovementSpeed = 0f;
@@ -32,6 +33,10 @@ public class Player_Movement : MonoBehaviour
         //get the rigidbody of the player
         rb = this.GetComponent<Rigidbody>();
         camera = GameObject.FindGameObjectWithTag("MainCamera"); //get camera from scene
+
+        //place the player in the spawn room
+        gameObject.transform.localPosition = dg.getSpawnRoom();
+        Debug.Log(dg.getSpawnRoom());
     }
 
     // Update is called once per frame

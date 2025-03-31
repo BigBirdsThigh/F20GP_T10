@@ -11,7 +11,10 @@ public class DungeonGen : MonoBehaviour
     private LinkedList<((int,int),(int,int))> bridges;
     private LinkedList<Room> rooms;
     private (int,int)[] adjacent_rooms = new (int,int)[4];
-    
+
+    // Player
+    public GameObject player;
+
     // Room variables
     static private int room_count = 8; // hardcoded uh oh
     public GameObject Door_obj;
@@ -38,6 +41,10 @@ public class DungeonGen : MonoBehaviour
     private Room JumpRoom1x1;
     public GameObject JumpRoom1x2_obj;
     private Room JumpRoom1x2;
+
+    // key
+    public GameObject key_obj;
+    int[] keyLocations;
 
     private Room[] possible_rooms = new Room[room_count];
     
@@ -209,7 +216,44 @@ public class DungeonGen : MonoBehaviour
                 }
             }
         }
-    
+
+        // list of key spawn locations
+        HashSet<int> keyLocations = new HashSet<int>();
+        while (keyLocations.Count < 3)
+        {
+            int location = Random.Range(0, rooms.Count);
+            keyLocations.Add(location);
+            Debug.Log(location);
+        }
+
+        // traverse list of rooms
+        LinkedListNode<Room> current = rooms.First;
+        int index = 0;
+        int keysSpawned = 0;
+
+        // spawn 3 keys in the center of the randomly chosen rooms
+        while (current != null && keysSpawned < 3)
+        {
+            if (keyLocations.Contains(index))
+            {
+                Instantiate(key_obj, new Vector3(current.Value.Origin.Item2 * 45, 0, current.Value.Origin.Item1 * -45), key_obj.transform.rotation);
+                //Debug.Log("Key Spawned at: " + index);
+                keysSpawned++;
+            }
+            current = current.Next;
+            index++;
+        }
+
+
+
+        // place the player in the center of the starting room - NOT WORKING!
+        player.transform.localPosition = new Vector3(rooms.First.Value.Origin.Item2 * 45, 0, rooms.First.Value.Origin.Item1 * -45);
+    }
+
+
+    public Vector3 getSpawnRoom()
+    {
+        return new Vector3(rooms.First.Value.Origin.Item2 * 45, 0, rooms.First.Value.Origin.Item1 * -45);
     }
 
     // Update is called once per frame
