@@ -14,6 +14,7 @@ public class DungeonGen : MonoBehaviour
 
     // Player
     public GameObject player;
+    private GameObject playerInstance;
 
     // Room variables
     static private int room_count = 8; // hardcoded uh oh
@@ -193,10 +194,11 @@ public class DungeonGen : MonoBehaviour
 
 
         // Add the rooms and doors to the scene
-        foreach (Room room in rooms) {
+        foreach (Room room in rooms)
+        {
             //Quaternion quat = Quaternion.identity;
             //quat.y = room.Rotation;
-            Instantiate(room.Obj, new Vector3 (room.Origin.Item2*45, 0, room.Origin.Item1*-45), Quaternion.Euler(new Vector3(0, room.Rotation, 0)));
+            Instantiate(room.Obj, new Vector3(room.Origin.Item2 * 45, 0, room.Origin.Item1 * -45), Quaternion.Euler(new Vector3(0, room.Rotation, 0)));
         }
 
         foreach(((int,int),(int,int)) br in bridges) { 
@@ -217,11 +219,13 @@ public class DungeonGen : MonoBehaviour
             }
         }
 
+        playerInstance = Instantiate(player, getSpawnRoom(), player.transform.rotation);
+
         // list of key spawn locations
         HashSet<int> keyLocations = new HashSet<int>();
         while (keyLocations.Count < 3)
         {
-            int location = Random.Range(0, rooms.Count);
+            int location = Random.Range(1, rooms.Count);
             keyLocations.Add(location);
             Debug.Log(location);
         }
@@ -243,17 +247,16 @@ public class DungeonGen : MonoBehaviour
             current = current.Next;
             index++;
         }
-
-
-
-        // place the player in the center of the starting room - NOT WORKING!
-        player.transform.localPosition = new Vector3(rooms.First.Value.Origin.Item2 * 45, 0, rooms.First.Value.Origin.Item1 * -45);
     }
 
+    public GameObject getPlayerInstance()
+    {
+        return playerInstance;
+    }
 
     public Vector3 getSpawnRoom()
     {
-        return new Vector3(rooms.First.Value.Origin.Item2 * 45, 0, rooms.First.Value.Origin.Item1 * -45);
+        return new Vector3(rooms.First.Value.Origin.Item2 * 45, 1.5f, rooms.First.Value.Origin.Item1 * -45);
     }
 
     // Update is called once per frame
