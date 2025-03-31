@@ -13,12 +13,19 @@ public class WeaponHitbox : MonoBehaviour
     {
         hitboxCollider = GetComponent<Collider>();
         if (hitboxCollider != null)
-            hitboxCollider.enabled = false; // Start disabled - I also started disabled
+            hitboxCollider.enabled = false; // Start disabled
     }
 
     private void OnTriggerEnter(Collider other)
     {
         Debug.Log($"Trigger entered with: {other.name}");
+
+        // Ignore anything on the "Enemy" layer
+        if (other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+        {
+            Debug.Log($"{other.name} is on Enemy layer. Ignored.");
+            return;
+        }
 
         if (!canHit || hasHit) return;
 
@@ -35,6 +42,7 @@ public class WeaponHitbox : MonoBehaviour
             Debug.Log($"{other.name} has no Health component.");
         }
     }
+
 
 
     public void EnableHitbox()
