@@ -11,9 +11,12 @@ public class DungeonGen : MonoBehaviour
     private LinkedList<((int,int),(int,int))> bridges;
     private LinkedList<Room> rooms;
     private (int,int)[] adjacent_rooms = new (int,int)[4];
-    
+
+    // Player
+    public GameObject player;
+
     // Room variables
-    static private int room_count = 6; // hardcoded uh oh
+    static private int room_count = 8; // hardcoded uh oh
     public GameObject Door_obj;
 
     public GameObject StartRoom_obj;
@@ -32,6 +35,16 @@ public class DungeonGen : MonoBehaviour
     private Room Room1x2_Fire_1;
     public GameObject Room1x2_Fire_2_obj;
     private Room Room1x2_Fire_2;
+
+    // jump rooms
+    public GameObject JumpRoom1x1_obj;
+    private Room JumpRoom1x1;
+    public GameObject JumpRoom1x2_obj;
+    private Room JumpRoom1x2;
+
+    // key
+    public GameObject key_obj;
+    int[] keyLocations;
 
     private Room[] possible_rooms = new Room[room_count];
     
@@ -60,6 +73,12 @@ public class DungeonGen : MonoBehaviour
         possible_rooms[4] = Room1x2_Fire_1;
         Room1x2_Fire_2 = new Room("Room1x2_Fire_2", "6", 1, 2, Room1x2_Fire_2_obj);
         possible_rooms[5] = Room1x2_Fire_2;
+
+        //jump rooms
+        JumpRoom1x1 = new Room("JumpRoom1x1", "j", 1, 1, JumpRoom1x1_obj);
+        possible_rooms[6] = JumpRoom1x1;
+        JumpRoom1x2 = new Room("JumpRoom1x2", "i", 1, 2, JumpRoom1x2_obj);
+        possible_rooms[7] = JumpRoom1x2;
 
         // create empty grid
         grid = new string[grid_height, grid_width];
@@ -183,7 +202,7 @@ public class DungeonGen : MonoBehaviour
         foreach(((int,int),(int,int)) br in bridges) { 
             float door_x = ((float) br.Item1.Item2 + (float) br.Item2.Item2)/2;
             float door_y = ((float) br.Item1.Item1 + (float) br.Item2.Item1)/2;
-            Vector3 door_pos = new Vector3 (door_x*45, 3, door_y*-45);
+            Vector3 door_pos = new Vector3 (door_x*45, 0, door_y*-45);
             int door_rotation = 90;
             if (br.Item1.Item2 != br.Item2.Item2) { // if x coords are not equal door must be rotated the other way
                 door_rotation = 0;
@@ -191,13 +210,50 @@ public class DungeonGen : MonoBehaviour
             Instantiate(Door_obj, door_pos, Quaternion.Euler(new Vector3(0, door_rotation, 0)));
 
             foreach (GameObject go in GameObject.FindGameObjectsWithTag("DoorWall")) {
-                if (Vector3.Distance(door_pos, go.transform.position) < 10)
+                if (Vector3.Distance(door_pos, go.transform.position) < 5)
                 {
                     Destroy(go);
                 }
             }
         }
-    
+
+        // list of key spawn locations
+        HashSet<int> keyLocations = new HashSet<int>();
+        while (keyLocations.Count < 3)
+        {
+            int location = Random.Range(0, rooms.Count);
+            keyLocations.Add(location);
+            Debug.Log(location);
+        }
+
+        // traverse list of rooms
+        LinkedListNode<Room> current = rooms.First;
+        int index = 0;
+        int keysSpawned = 0;
+
+        // spawn 3 keys in the center of the randomly chosen rooms
+        while (current != null && keysSpawned < 3)
+        {
+            if (keyLocations.Contains(index))
+            {
+                Instantiate(key_obj, new Vector3(current.Value.Origin.Item2 * 45, 0, current.Value.Origin.Item1 * -45), key_obj.transform.rotation);
+                //Debug.Log("Key Spawned at: " + index);
+                keysSpawned++;
+            }
+            current = current.Next;
+            index++;
+        }
+
+
+
+        // place the player in the center of the starting room - NOT WORKING!
+        player.transform.localPosition = new Vector3(rooms.First.Value.Origin.Item2 * 45, 0, rooms.First.Value.Origin.Item1 * -45);
+    }
+
+
+    public Vector3 getSpawnRoom()
+    {
+        return new Vector3(rooms.First.Value.Origin.Item2 * 45, 0, rooms.First.Value.Origin.Item1 * -45);
     }
 
     // Update is called once per frame
