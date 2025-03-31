@@ -881,10 +881,10 @@ MonoBehaviour:
   StartRoom_obj: {fileID: 3384303518669868474, guid: ac3149923f67e9f498d7d0caf55e339d, type: 3}
   Room1x1_obj: {fileID: 6655617814020474646, guid: 0e20231ccc381bd48b61e7e1558e9bc7, type: 3}
   Room1x2_obj: {fileID: 3296360596419214845, guid: 9ec3a7da7b838684f92634072798ba6f, type: 3}
-  Room1x1_Fire_1_obj: {fileID: 2600243145457486683, guid: 5f649c6a5de704a4494dae89c76ed0f6, type: 3}
-  Room1x1_Fire_2_obj: {fileID: 5155867209465418054, guid: d42dc2f02323d1c4685e683fd58b08e5, type: 3}
-  Room1x2_Fire_1_obj: {fileID: 1682695913049906013, guid: 5d6d2ac2b52ce574e8c48558a0096412, type: 3}
-  Room1x2_Fire_2_obj: {fileID: 5913754262740223010, guid: aaf582085cdb89d4fa7a70cbf054c4d9, type: 3}
+  Room1x1_Fire_1_obj: {fileID: 7370087907643526058, guid: cfe477dd510ffec4a81ce20f341088a8, type: 3}
+  Room1x1_Fire_2_obj: {fileID: 2866644619536332469, guid: e8954ffd156c9e94e84511930873c301, type: 3}
+  Room1x2_Fire_1_obj: {fileID: 6335035978308338009, guid: 5d6d2ac2b52ce574e8c48558a0096412, type: 3}
+  Room1x2_Fire_2_obj: {fileID: 5904146274192457249, guid: aaf582085cdb89d4fa7a70cbf054c4d9, type: 3}
   JumpRoom1x1_obj: {fileID: 4071525565695726265, guid: 74443954eead47a4180b8468c22f2026, type: 3}
   JumpRoom1x2_obj: {fileID: 1914749515237400370, guid: da9cb126e92393549a8557cf1386a9e3, type: 3}
 --- !u!4 &619823852
