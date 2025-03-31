@@ -9,6 +9,8 @@ public class KeyScript : MonoBehaviour
 
     public float speed = 50f;
 
+    public GameObject player;
+
     // Update is called once per frame
     void Update()
     {
@@ -27,5 +29,7 @@ public class KeyScript : MonoBehaviour
         }
 
         gameObject.transform.Rotate(rotation * speed * Time.deltaTime);
+
+        //if (player.get)
     }
 }
