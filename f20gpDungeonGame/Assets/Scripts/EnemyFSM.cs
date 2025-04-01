@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class EnemyFSM : MonoBehaviour
+public class EnemyFSM : MonoBehaviour, IKillable
 {
     public enum EnemyState { Idle, Attacking }
     public EnemyState currentState = EnemyState.Idle;
@@ -208,6 +208,19 @@ public class EnemyFSM : MonoBehaviour
             Debug.Log("Enemy failed to reach player in time.");
             FinishAttack();
         }
+    }
+    public void Die()
+    {
+        Debug.Log("EnemyFSM: I have died.");
+
+        if (manager != null)
+            manager.DeregisterEnemy(this);
+
+        RoomTrigger room = GetComponentInParent<RoomTrigger>();
+        if (room != null)
+            room.activeEnemies.Remove(this); // let it clean up in Update
+
+        Destroy(gameObject);
     }
 
 

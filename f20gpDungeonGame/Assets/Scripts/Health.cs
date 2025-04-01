@@ -1,10 +1,19 @@
 using UnityEngine;
+using System.Collections;
 
 public class Health : MonoBehaviour
 {
     [Header("Health Settings")]
     public int maxHealth = 100;
     public int currentHealth;
+    private IKillable deathHandler;
+
+    [Header("Damage Feedback")]
+    public float flashDuration = 0.2f;
+    public Color flashColor = Color.red;
+    private Material matInstance;
+    private Color originalColor;
+    private Coroutine flashRoutine;
 
     [Header("Debug")]
     public bool destroyOnDeath = true;
@@ -12,9 +21,16 @@ public class Health : MonoBehaviour
     private void Awake()
     {
         currentHealth = maxHealth;
+        deathHandler = GetComponent<IKillable>();
+
+        Renderer rend = GetComponentInChildren<Renderer>();
+        if (rend != null)
+        {
+            matInstance = rend.material; // creates an instance, safe to modify
+            originalColor = matInstance.color;
+        }
     }
 
-   
     public void TakeDamage(int amount)
     {
         currentHealth -= amount;
@@ -22,13 +38,36 @@ public class Health : MonoBehaviour
 
         Debug.Log($"{gameObject.name} took {amount} damage. Health: {currentHealth}");
 
+        if (matInstance != null)
+        {
+            if (flashRoutine != null) StopCoroutine(flashRoutine);
+            flashRoutine = StartCoroutine(FlashMaterial());
+        }
+
         if (currentHealth <= 0)
         {
             Die();
         }
     }
 
-   
+    private IEnumerator FlashMaterial()
+    {
+        matInstance.color = flashColor;
+        yield return new WaitForSeconds(flashDuration);
+        matInstance.color = originalColor;
+    }
+
+    private void Die()
+    {
+        Debug.Log($"{gameObject.name} has died.");
+
+        if (deathHandler != null)
+            deathHandler.Die();
+
+        if (destroyOnDeath)
+            Destroy(gameObject);
+    }
+
     public void Heal(int amount)
     {
         currentHealth += amount;
@@ -37,26 +76,12 @@ public class Health : MonoBehaviour
         Debug.Log($"{gameObject.name} healed {amount}. Health: {currentHealth}");
     }
 
-   
-    private void Die()
-    {
-        Debug.Log($"{gameObject.name} has died.");
-
-
-        if (destroyOnDeath)
-        {
-            Destroy(gameObject);
-        }
-    }
-
-    
     public void ResetHealth()
     {
         currentHealth = maxHealth;
         Debug.Log($"{gameObject.name}'s health reset to {maxHealth}.");
     }
 
-    
     public bool IsDead()
     {
         return currentHealth <= 0;

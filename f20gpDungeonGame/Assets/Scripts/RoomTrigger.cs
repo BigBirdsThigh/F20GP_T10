@@ -6,41 +6,81 @@ public class RoomTrigger : MonoBehaviour
     private bool hasTriggered = false;
     private List<GameObject> doorsInRoom = new List<GameObject>();
 
+    [Header("Enemy Tracking")]
+    public List<EnemyFSM> activeEnemies = new List<EnemyFSM>();
+    public List<WeepingAngel> activeAngels = new List<WeepingAngel>();
+
+    private bool cleared = false;
+
     private void OnTriggerEnter(Collider other)
     {
         if (hasTriggered || !other.CompareTag("Player")) return;
 
         hasTriggered = true;
 
-        // Trigger each EnemySpawner (each child is one spawn point)
+        // Spawn enemies from each child spawner
         EnemySpawner[] spawners = GetComponentsInChildren<EnemySpawner>();
         foreach (EnemySpawner spawner in spawners)
         {
             spawner.SpawnEnemy();
         }
 
-        // Find and close doors nearby using parent transform
-        Transform roomTransform = transform.parent;
-        doorsInRoom = FindNearbyDoors(roomTransform);
+        // Find doors nearby
+        doorsInRoom = FindNearbyDoors(transform.parent);
 
         foreach (GameObject door in doorsInRoom)
         {
             door.SendMessage("CloseDoor", SendMessageOptions.DontRequireReceiver);
         }
 
-        // Disable trigger to prevent retriggering
+        // Disable trigger
         GetComponent<Collider>().enabled = false;
+    }
+
+    void Update()
+    {
+        if (cleared) return;
+
+        activeEnemies.RemoveAll(e => e == null); // auto clean up destroyed enemies
+
+        if (activeEnemies.Count == 0 && activeAngels.Count > 0)
+        {
+            cleared = true;
+            Debug.Log("[RoomTrigger] All enemies cleared. Opening doors and cleaning up angels.");
+
+            foreach (WeepingAngel angel in activeAngels)
+            {
+                if (angel != null)
+                    Destroy(angel.gameObject);
+            }
+
+            foreach (GameObject door in doorsInRoom)
+            {
+                door.SendMessage("OpenDoor", SendMessageOptions.DontRequireReceiver);
+            }
+        }
+    }
+
+    public void RegisterEnemy(EnemyFSM enemy)
+    {
+        if (!activeEnemies.Contains(enemy))
+            activeEnemies.Add(enemy);
+    }
+
+    public void RegisterAngel(WeepingAngel angel)
+    {
+        if (!activeAngels.Contains(angel))
+            activeAngels.Add(angel);
     }
 
     private List<GameObject> FindNearbyDoors(Transform roomTransform)
     {
         List<GameObject> doors = new List<GameObject>();
-        int reqDistance = 33;
+        float reqDistance = 33f;
 
         foreach (GameObject go in GameObject.FindGameObjectsWithTag("Door"))
         {
-            float dist = Vector3.Distance(roomTransform.position, go.transform.position);
-            if (dist < reqDistance)
+            if (Vector3.Distance(roomTransform.position, go.transform.position) < reqDistance)
             {
                 doors.Add(go);
             }

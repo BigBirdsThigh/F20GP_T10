@@ -1,9 +1,9 @@
 using UnityEngine;
+using System.Collections;
 
 public class DungeonDoor : MonoBehaviour
 {
-    public Animator animator;
-
+    private Animator animator;
     private Collider doorCollider;
 
     private void Start()
@@ -11,55 +11,45 @@ public class DungeonDoor : MonoBehaviour
         animator = GetComponent<Animator>();
         doorCollider = GetComponent<Collider>();
 
-        // Wait a frame to let Animator settle before checking state
         StartCoroutine(InitializeColliderState());
     }
 
-    private System.Collections.IEnumerator InitializeColliderState()
+    private IEnumerator InitializeColliderState()
     {
-        yield return null;
-
-        UpdateColliderBasedOnState();
+        yield return null; // Let Animator initialize
+        UpdateColliderState();
     }
 
     private void Update()
     {
         AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
 
-        // Opening finished
+        // Transition to idle states after animation completes
         if (stateInfo.IsName("Opening Door") && stateInfo.normalizedTime >= 1f)
-        {
-            AnimationStateSet(2); // Set to Open Idle
-        }
+            AnimationStateSet(4); // Open Idle
 
-        // Closing finished
         if (stateInfo.IsName("Closing Door") && stateInfo.normalizedTime >= 1f)
-        {
-            AnimationStateSet(4); // Set to Closed Idle
-        }
+            AnimationStateSet(2); // Closed Idle
 
-        UpdateColliderBasedOnState();
+        UpdateColliderState();
     }
 
-    private void UpdateColliderBasedOnState()
+    private void UpdateColliderState()
     {
         AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
 
-        if (stateInfo.IsName("Closed Idle") || stateInfo.IsName("Closing Door"))
+        bool isClosed = stateInfo.IsName("Closed Idle") || stateInfo.IsName("Closing Door");
+        bool isOpen = stateInfo.IsName("Open Idle") || stateInfo.IsName("Opening Door");
+
+        if (isClosed && !doorCollider.enabled)
         {
-            if (!doorCollider.enabled)
-            {
-                doorCollider.enabled = true;
-                Debug.Log("Collider ENABLED (Closed)");
-            }
+            doorCollider.enabled = true;
+            Debug.Log("Door is closed: Collider ENABLED");
         }
-        else if (stateInfo.IsName("Open Idle") || stateInfo.IsName("Opening Door"))
+        else if (isOpen && doorCollider.enabled)
         {
-            if (doorCollider.enabled)
-            {
-                doorCollider.enabled = false;
-                Debug.Log("Collider DISABLED (Open)");
-            }
+            doorCollider.enabled = false;
+            Debug.Log("Door is open: Collider DISABLED");
         }
     }
 
@@ -73,8 +63,8 @@ public class DungeonDoor : MonoBehaviour
         AnimationStateSet(3); // Closing Door
     }
 
-    private void AnimationStateSet(int value)
+    private void AnimationStateSet(int state)
     {
-        animator.SetInteger("doorState", value);
+        animator.SetInteger("doorState", state);
     }
 }
