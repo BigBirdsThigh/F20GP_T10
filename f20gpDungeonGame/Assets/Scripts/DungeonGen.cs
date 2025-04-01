@@ -17,7 +17,7 @@ public class DungeonGen : MonoBehaviour
     private GameObject playerInstance;
 
     // Room variables
-    static private int room_count = 8; // hardcoded uh oh
+    static private int room_count = 9; // hardcoded uh oh
     public GameObject Door_obj;
 
     public GameObject StartRoom_obj;
@@ -42,6 +42,10 @@ public class DungeonGen : MonoBehaviour
     private Room JumpRoom1x1;
     public GameObject JumpRoom1x2_obj;
     private Room JumpRoom1x2;
+
+    // teleport room
+    public GameObject TeleportRoom_obj;
+    private Room TeleportRoom;
 
     // key
     public GameObject key_obj;
@@ -80,6 +84,10 @@ public class DungeonGen : MonoBehaviour
         possible_rooms[6] = JumpRoom1x1;
         JumpRoom1x2 = new Room("JumpRoom1x2", "i", 1, 2, JumpRoom1x2_obj);
         possible_rooms[7] = JumpRoom1x2;
+
+        //teleport room
+        TeleportRoom = new Room("TeleportRoom", "t", 1, 1, TeleportRoom_obj);
+        possible_rooms[8] = TeleportRoom;
 
         // create empty grid
         grid = new string[grid_height, grid_width];
