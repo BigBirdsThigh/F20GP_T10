@@ -25,6 +25,7 @@ public class Player_Movement : MonoBehaviour
     public bool isGrounded = true;
     public float jumpHeight = 50f;
     public float fallMult;
+    public float jumpLengthDur = 0.5f; //how long jump lasts
 
     private GameObject camera; //getting the player's camera from the scene
 
@@ -46,6 +47,7 @@ public class Player_Movement : MonoBehaviour
         MovementChecker(); //checks 'isMoving' either True or False
         PlayerSpeed(); //increases player speed if LEFT SHIFT held
         CheckGrounded(); //check if player is on the ground for jumping
+        //Jump(); //jumping for the player, done pressing spacebar
     }
 
     void FixedUpdate() //fixed update for handling in game physics with rigidbody movement
@@ -156,12 +158,34 @@ public class Player_Movement : MonoBehaviour
         {
             Debug.Log("jump pressed!");
             //rb.linearVelocity = new Vector3(rb.linearVelocity.x, Mathf.Sqrt(2 * jumpHeight * fallMult), rb.linearVelocity.z);
-            rb.AddForce(Vector3.up * Mathf.Sqrt(2 * jumpHeight * -Physics.gravity.y), ForceMode.Force);
+            //rb.AddForce(Vector3.up * Mathf.Sqrt(2 * jumpHeight * -Physics.gravity.y), ForceMode.Force);
+
+            StartCoroutine(JumpMechanic());
         }
         if(!isGrounded)
         {
             //if falling, add downwards force
             rb.linearVelocity += Vector3.down * (fallMult * Time.deltaTime);
         }
+    }
+
+    IEnumerator JumpMechanic()
+    {
+        isGrounded = false;
+        //jumpLengthDur
+        float time = 0f;
+        float startY = transform.position.y;
+        float peakY = startY + jumpHeight;
+
+        while(time < jumpLengthDur)
+        {
+            float timeKeep = time / jumpLengthDur;
+            float newY = Mathf.SmoothStep(startY, peakY, timeKeep);
+            transform.position = new Vector3(transform.position.x, newY, transform.position.z);
+
+            time += Time.deltaTime;
+            yield return null;
+        }
+        isGrounded = true;
     }
 }
