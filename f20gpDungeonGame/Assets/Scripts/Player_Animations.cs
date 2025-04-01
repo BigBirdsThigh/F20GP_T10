@@ -16,6 +16,11 @@ public class Player_Animations : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (player_Movement.animator.GetInteger("JumpTrans") != 0) 
+        {
+            //If jumping or falling, stop any movements animations
+            return;
+        }
         AnimationCyclesMovement();
     }
 
