@@ -16,7 +16,7 @@ public class DungeonDoor : MonoBehaviour
 
     private IEnumerator InitializeColliderState()
     {
-        yield return null; // Let Animator initialize
+        yield return null; // Let Animator initialise
         UpdateColliderState();
     }
 
