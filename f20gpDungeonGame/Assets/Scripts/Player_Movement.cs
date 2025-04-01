@@ -28,6 +28,7 @@ public class Player_Movement : MonoBehaviour
     public float jumpLengthDur = 0.5f; //how long jump lasts
 
     private GameObject camera; //getting the player's camera from the scene
+    public Animator animator; //public so its accessible from Player_Animations.cs
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -35,7 +36,7 @@ public class Player_Movement : MonoBehaviour
         //get the rigidbody of the player
         rb = this.GetComponent<Rigidbody>();
         camera = GameObject.FindGameObjectWithTag("MainCamera"); //get camera from scene
-        
+        animator = GetComponent<Animator>();
         //place the player in the spawn room
         // gameObject.transform.localPosition = dg.getSpawnRoom();
         // Debug.Log(dg.getSpawnRoom());
@@ -162,7 +163,7 @@ public class Player_Movement : MonoBehaviour
 
             StartCoroutine(JumpMechanic());
         }
-        if(!isGrounded)
+        else if (!isGrounded)
         {
             //if falling, add downwards force
             rb.linearVelocity += Vector3.down * (fallMult * Time.deltaTime);
@@ -171,7 +172,11 @@ public class Player_Movement : MonoBehaviour
 
     IEnumerator JumpMechanic()
     {
-        isGrounded = false;
+        //jump animator: JumpTrans 0=not jump, 1=jumpstart, 2=jumpmiddle, 3=jumpend
+        isGrounded = false;        
+        animator.SetInteger("JumpTrans", 1);
+        Debug.Log("jump trans = 1");
+
         //jumpLengthDur
         float time = 0f;
         float startY = transform.position.y;
@@ -183,9 +188,23 @@ public class Player_Movement : MonoBehaviour
             float newY = Mathf.SmoothStep(startY, peakY, timeKeep);
             transform.position = new Vector3(transform.position.x, newY, transform.position.z);
 
+            //once halfway, make jump transition to falling
+            if (timeKeep > 0.2f)
+            {
+                animator.SetInteger("JumpTrans", 2);
+                Debug.Log("jump trans = 2");
+            }
+            if (timeKeep >= 0.5f)
+            {
+                animator.SetInteger("JumpTrans", 3); //now falling
+                Debug.Log("jump trans = 3");
+            }
             time += Time.deltaTime;
             yield return null;
         }
+
+        animator.SetInteger("JumpTrans", 0); //could add this to a function that checks height from ground and make landing animation 3 when close enough but not yet grounded
+        Debug.Log("jump trans = 0");
         isGrounded = true;
     }
 }
