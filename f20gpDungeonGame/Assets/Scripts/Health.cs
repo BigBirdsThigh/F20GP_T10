@@ -4,8 +4,8 @@ using System.Collections;
 public class Health : MonoBehaviour
 {
     [Header("Health Settings")]
-    public float maxHealth = 100f;
-    public float currentHealth;
+    public int maxHealth = 100;
+    public int currentHealth;
     [Header("State Flags")]
     public bool isBlocking = false;
 
@@ -34,7 +34,7 @@ public class Health : MonoBehaviour
         }
     }
 
-    public void TakeDamage(float amount)
+    public void TakeDamage(int amount)
     {
         // Block check
         if (isBlocking)
@@ -58,6 +58,10 @@ public class Health : MonoBehaviour
         {
             Die();
         }
+    }
+
+    public int getHealth(){
+        return currentHealth;
     }
 
 
