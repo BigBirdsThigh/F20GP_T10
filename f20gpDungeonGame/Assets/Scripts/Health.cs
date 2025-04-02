@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Health : MonoBehaviour
 {
@@ -60,5 +61,10 @@ public class Health : MonoBehaviour
     public bool IsDead()
     {
         return currentHealth <= 0;
+    }
+
+    public int getHealth()
+    {
+        return currentHealth;
     }
 }

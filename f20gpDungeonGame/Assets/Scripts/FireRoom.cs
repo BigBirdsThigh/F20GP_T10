@@ -15,6 +15,8 @@ public class FireRoom : MonoBehaviour
     bool warningStarted = false;
     bool behaviourRunning = false;
 
+    public Health health;
+
     void Start()
     {
         //get all the fire tiles.
@@ -116,5 +118,10 @@ public class FireRoom : MonoBehaviour
             var emission = ps.emission;
             emission.enabled = false;
         }
+    }
+
+    public bool getFireState()
+    {
+        return fireOn;
     }
 }
