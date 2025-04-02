@@ -207,6 +207,7 @@ MonoBehaviour:
   jumpHeight: 4000
   fallMult: 1
   jumpLengthDur: 0.5
+  animator: {fileID: 0}
 --- !u!54 &3916709
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -354,8 +355,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 0/3
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 276907923a32e8a40b5f78aac008ec33, type: 2}
-  m_sharedMaterial: {fileID: -3082213990509191026, guid: 276907923a32e8a40b5f78aac008ec33, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1172,7 +1173,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &800283433
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1189,13 +1190,13 @@ MonoBehaviour:
   rotX: 0
   rotY: 0
   TP_Offset: {x: -8, y: 5, z: -12}
-  fov: -10
+  fov: -12
   focusSpeed: 5
-  maxLookupAngle: 89
-  minLookupAngle: -10
+  maxLookupAngle: 180
+  minLookupAngle: -60.2
   maxFOV: -1
   minFOV: -12
-  zoomInOffset: 1
+  zoomInOffset: 0.2
 --- !u!114 &800283434
 MonoBehaviour:
   m_ObjectHideFlags: 0
