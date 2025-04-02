@@ -30,6 +30,11 @@ public class Player_Camera : MonoBehaviour
     //late update to prevent glitchy camera- as movement is done in fixed update
     void LateUpdate()
     {
+        if (player == null)
+        {
+            player = GameObject.FindGameObjectWithTag("Player");
+            if (player == null) return; // Don't run camera logic until player is found
+        }
         ThirdPersonCamera();
         AdjustFOV();
     }

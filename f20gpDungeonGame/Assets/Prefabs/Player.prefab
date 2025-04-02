@@ -316,7 +316,7 @@ MonoBehaviour:
   fixRot: 0
   raycastMaxDistance: 0.1
   isGrounded: 1
-  jumpHeight: 30
+  jumpHeight: 5
   fallMult: 400
   jumpLengthDur: 0.5
   animator: {fileID: 0}
