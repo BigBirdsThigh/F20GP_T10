@@ -48,7 +48,7 @@ public class UI_menus : MonoBehaviour
 
         if(isGameEnded)
         {
-            ShowWinLose(hasWon);
+            ShowWinLose(true);
         }
 
         if(Input.GetKeyDown(KeyCode.T))

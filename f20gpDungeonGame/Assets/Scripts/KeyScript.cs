@@ -3,6 +3,7 @@ using UnityEngine;
 public class KeyScript : MonoBehaviour
 {
     public float speed = 50f;
+    private int keyCount = 0;
 
     [SerializeField] public GameObject uiHolder;
     private UI uiScript;
@@ -29,7 +30,13 @@ public class KeyScript : MonoBehaviour
         {
             Debug.Log("key collected!");
             uiScript.increaseKeyCount();
+            keyCount++;
             Destroy(gameObject);
         }
+    }
+
+    public int getKeyCount()
+    {
+        return keyCount;
     }
 }
