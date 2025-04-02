@@ -84,6 +84,7 @@ public class UI_menus : MonoBehaviour
         }
     }
 
+
     void PauseMenuToggle()
     {
         //if the game hasnt ended, and the player presses the escape key, and its not already paused, switch pause boolean
