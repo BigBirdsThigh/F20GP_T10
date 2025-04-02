@@ -60,10 +60,6 @@ public class Health : MonoBehaviour
         }
     }
 
-    public int getHealth(){
-        return currentHealth;
-    }
-
 
     private IEnumerator FlashMaterial()
     {
