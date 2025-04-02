@@ -427,6 +427,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 6
+  maxHealth: 6
   currentHealth: 0
   isBlocking: 0
   flashDuration: 0.2
