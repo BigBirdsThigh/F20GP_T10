@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class EnemyFSM : MonoBehaviour
+public class EnemyFSM : MonoBehaviour, IKillable
 {
     public enum EnemyState { Idle, Attacking }
     public EnemyState currentState = EnemyState.Idle;
@@ -26,10 +26,12 @@ public class EnemyFSM : MonoBehaviour
     private EnemyGroupManager manager;
     private bool isAttacking;
     private WeaponHitbox swordHitbox;
+    private float baseSpeed;
 
 
     private void Start()
     {
+        baseSpeed = moveSpeed;
         anim = GetComponentInChildren<Animator>();
         swordHitbox = GetComponentInChildren<WeaponHitbox>();
         if (swordHitbox != null)
@@ -51,13 +53,13 @@ public class EnemyFSM : MonoBehaviour
             {
                 Bounds bounds = meshRenderer.bounds;
 
-                Vector3 size = col.size;
-                size.y = bounds.size.y; // Set only height
-                col.size = size;
+                // Vector3 size = col.size;
+                // size.y = bounds.size.y; // Set only height
+                // col.size = size;
 
-                Vector3 center = col.center;
-                center.y = bounds.center.y - transform.position.y;
-                col.center = center;
+                // Vector3 center = col.center;
+                // center.y = bounds.center.y - transform.position.y;
+                // col.center = center;
             }
         }
 
@@ -158,6 +160,7 @@ public class EnemyFSM : MonoBehaviour
 
     private void HandleAttackState()
     {
+        moveSpeed = 10.6f;
         if (targetPlayer == null)
         {
             FinishAttack();
@@ -205,6 +208,19 @@ public class EnemyFSM : MonoBehaviour
             Debug.Log("Enemy failed to reach player in time.");
             FinishAttack();
         }
+    }
+    public void Die()
+    {
+        Debug.Log("EnemyFSM: I have died.");
+
+        if (manager != null)
+            manager.DeregisterEnemy(this);
+
+        RoomTrigger room = GetComponentInParent<RoomTrigger>();
+        if (room != null)
+            room.activeEnemies.Remove(this); // let it clean up in Update
+
+        Destroy(gameObject);
     }
 
 
@@ -263,7 +279,7 @@ public class EnemyFSM : MonoBehaviour
             anim.SetBool("isAttacking", false); // Exit combat state
         }
 
-        moveSpeed = 1.5f;
+        moveSpeed = baseSpeed;
 
         if (manager != null)
             manager.NotifyAttackFinished(this);

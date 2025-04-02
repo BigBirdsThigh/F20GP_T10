@@ -70,6 +70,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 1
+  ignoreLayer:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!54 &6144571148464560421
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -111,7 +114,7 @@ GameObject:
   - component: {fileID: 9110486242296068278}
   - component: {fileID: -8501087252895108272}
   - component: {fileID: -6050420344249971462}
-  - component: {fileID: 1881148439873689596}
+  - component: {fileID: 5153006213723224171}
   m_Layer: 3
   m_Name: BasicEnemy
   m_TagString: Untagged
@@ -129,7 +132,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -1.68, y: 1.3921643, z: 6.66}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.7, y: 1.7, z: 1.7}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4790576633132496902}
@@ -205,10 +208,10 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 0.76, y: 1.57, z: 0.61}
-  m_Center: {x: 0, y: 1, z: 0}
+  m_Center: {x: 0, y: 0.7, z: 0}
 --- !u!54 &-8501087252895108272
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -250,7 +253,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentState: 0
   targetObject: {fileID: 0}
-  moveSpeed: 1.5
+  moveSpeed: 8.7
   rotationSpeed: 5
   numRays: 13
   rayDistance: 2.5
@@ -258,7 +261,7 @@ MonoBehaviour:
   avoidanceLayer:
     serializedVersion: 2
     m_Bits: 9
---- !u!114 &1881148439873689596
+--- !u!114 &5153006213723224171
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -270,8 +273,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e9294457c7de1644b5d8ff6947307eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 3
-  currentHealth: 3
+  maxHealth: 2
+  currentHealth: 0
+  isBlocking: 0
+  flashDuration: 0.2
+  flashColor: {r: 1, g: 0, b: 0, a: 1}
   destroyOnDeath: 1
 --- !u!1001 &2043319127168950394
 PrefabInstance:
@@ -411,7 +417,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6782667309670242428, guid: 6e4019dcbde26c8408f888128d0a9a67, type: 3}
       propertyPath: m_LocalScale.z
-      value: 1.1856
+      value: 1.52
       objectReference: {fileID: 0}
     - target: {fileID: 6782667309670242428, guid: 6e4019dcbde26c8408f888128d0a9a67, type: 3}
       propertyPath: m_LocalPosition.x

@@ -17,8 +17,14 @@ public class DungeonGen : MonoBehaviour
     private GameObject playerInstance;
 
     // Room variables
-    static private int room_count = 9; // hardcoded uh oh
+    static private int room_count = 11; // hardcoded uh oh
     public GameObject Door_obj;
+
+    public GameObject Enemy1x1;
+    private Room EnemyRoom1x1;
+
+    public GameObject Enemy1x2;
+    private Room EnemyRoom1x2;
 
     public GameObject StartRoom_obj;
     private Room StartRoom;
@@ -85,6 +91,13 @@ public class DungeonGen : MonoBehaviour
         possible_rooms[0] = Room1x1;
         Room1x2 = new Room("Room1x2", "2", 1, 2, Room1x2_obj);
         possible_rooms[1] = Room1x2;
+
+
+        // enemy rooms
+        EnemyRoom1x1 = new Room("EnemyRoom1x1", "z", 1,1, Enemy1x1);
+        possible_rooms[9] = EnemyRoom1x1;
+        EnemyRoom1x2 = new Room("EnemyRoom1x2", "a", 1,2, Enemy1x2);
+        possible_rooms[10] = EnemyRoom1x2;
 
         //fire rooms
         Room1x1_Fire_1 = new Room("Room1x1_Fire_1", "3", 1, 1, Room1x1_Fire_1_obj);

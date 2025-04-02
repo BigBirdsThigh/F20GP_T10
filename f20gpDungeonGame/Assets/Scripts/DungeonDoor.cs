@@ -1,57 +1,55 @@
 using UnityEngine;
+using System.Collections;
 
 public class DungeonDoor : MonoBehaviour
 {
-    public Animator animator;
+    private Animator animator;
+    private Collider doorCollider;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private void Start()
     {
-        animator = this.GetComponent<Animator>();
+        animator = GetComponent<Animator>();
+        doorCollider = GetComponent<Collider>();
+        if (doorCollider == null){
+            Debug.Log("NO DOOR COLLIDER");
+        }
+        animator.SetBool("open", true);
+        
     }
 
-    // Update is called once per frame
-    void Update()
+
+
+    private void Update()
     {
-        //check the animator state information
         AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
-        //if the animation is finished
-        if (stateInfo.IsName("Opening Door") && stateInfo.normalizedTime >= 1.0f)
-        {
-            //set to open idle animation
-            AnimationStateSet(2);
-        }
-        if (stateInfo.IsName("Closing Door") && stateInfo.normalizedTime >= 1.0f)
-        {
-            //set to closed idle animation
-            AnimationStateSet(4);
-        }
 
-        //Testing
-        // if(Input.GetKeyDown(KeyCode.T))
-        // {
-        //     OpenDoor();
-        // }
-        // if(Input.GetKeyDown(KeyCode.Y))
-        // {
-        //     CloseDoor();
-        // }
+        // // Transition to idle states after animation completes
+        // if (stateInfo.IsName("Opening Door") && stateInfo.normalizedTime >= 1f)
+        //     AnimationStateSet(4); // Open Idle
+
+        // if (stateInfo.IsName("Closing Door") && stateInfo.normalizedTime >= 1f)
+        //     AnimationStateSet(2); // Closed Idle
+
+        // UpdateColliderState();
     }
+
+   
 
     public void OpenDoor()
     {
-        AnimationStateSet(1);
-        //once animation finished, play next one, this is done in the animator
+        animator.SetBool("open", true);
+        doorCollider.enabled = false; // Door is open -> no blocking
     }
 
     public void CloseDoor()
     {
-        AnimationStateSet(3);
+        animator.SetBool("open", false);
+        doorCollider.enabled = true; // Door is closed -> should block
     }
 
-    //helper method to set the animation state
-    private void AnimationStateSet(int value)
+
+    private void AnimationStateSet(int state)
     {
-        animator.SetInteger("doorState", value);
+        animator.SetInteger("doorState", state);
     }
 }

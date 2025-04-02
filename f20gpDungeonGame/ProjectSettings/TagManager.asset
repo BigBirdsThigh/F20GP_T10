@@ -8,6 +8,7 @@ TagManager:
   - FireTile
   - DoorWall
   - Door
+  - TelePad
   layers:
   - Default
   - TransparentFX

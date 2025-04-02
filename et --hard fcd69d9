@@ -1,0 +1,23 @@
+[33m016c499[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31mupstream/Newest-working[m[33m, [m[1;32mNewest-working[m[33m)[m HEAD@{0}: reset: moving to upstream/Newest-working
+[33m696710d[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m HEAD@{1}: checkout: moving from main to main
+[33m696710d[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m HEAD@{2}: checkout: moving from Newest-working to main
+[33m016c499[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31mupstream/Newest-working[m[33m, [m[1;32mNewest-working[m[33m)[m HEAD@{3}: checkout: moving from main to Newest-working
+[33m696710d[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m HEAD@{4}: commit: asd
+[33mfcd69d9[m HEAD@{5}: commit: ugh
+[33m9e73cbc[m[33m ([m[1;31mupstream/main[m[33m)[m HEAD@{6}: pull upstream main: Fast-forward
+[33m4073a20[m HEAD@{7}: reset: moving to upstream/main
+[33mff4f9cb[m HEAD@{8}: pull upstream main: Fast-forward
+[33m69f66c9[m HEAD@{9}: reset: moving to HEAD
+[33m69f66c9[m HEAD@{10}: reset: moving to HEAD
+[33m69f66c9[m HEAD@{11}: merge upstream/main: Fast-forward
+[33m2db9308[m HEAD@{12}: checkout: moving from main to main
+[33m2db9308[m HEAD@{13}: commit: enemies wrapped up, now for the room
+[33m1d38b81[m HEAD@{14}: commit: final basic enemy logic
+[33m20d2960[m HEAD@{15}: pull origin main: Fast-forward
+[33m812833c[m HEAD@{16}: reset: moving to HEAD
+[33m812833c[m HEAD@{17}: checkout: moving from patch-1 to main
+[33m4c6c31d[m[33m ([m[1;31morigin/patch-1[m[33m, [m[1;32mpatch-1[m[33m)[m HEAD@{18}: commit: deleting prefab meta
+[33mf04b579[m HEAD@{19}: commit: moving stuff to a new folder to avoid merge conflicts
+[33mc8105ad[m HEAD@{20}: commit: enemy base logic done, models, attacking, anims left
+[33mb4a2bed[m HEAD@{21}: checkout: moving from main to patch-1
+[33m812833c[m HEAD@{22}: clone: from https://github.com/BigBirdsThigh/F20GP_T10.git
