@@ -2,105 +2,150 @@ using UnityEngine;
 
 public class PlayerCombat : MonoBehaviour
 {
+    [Header("Animator")]
     public Animator animator;
-    public float comboWindowStart = 0.6f;
-    public float comboWindowEnd = 0.95f;
 
-    public float attackDelay = 0.2f;
-    private float attackCooldown = 0f;
+    [Header("Attack Settings")]
+    public float attack1Duration = 0.67f;
+    public float attack2Duration = 0.75f;
+
+    [Header("Block Settings")]
+    public float blockAttackLockout = 0.2f;
+
+    private float attackCooldownTimer = 0f;
+    private float blockCooldownTimer = 0f;
 
     private bool isAttacking = false;
-    private bool inComboWindow = false;
-    private bool queuedAttack = false;
-    private int currentAttack = 0;
+    private bool isInAttack2 = false;
+    private bool queuedAttack2 = false;
+    private bool isBlocking = false;
+
+    private WeaponHitbox weaponHitbox;
+    private Health health;
 
     void Start()
     {
         if (animator == null)
             animator = GetComponent<Animator>();
+
+        weaponHitbox = GetComponentInChildren<WeaponHitbox>();
+        health = GetComponent<Health>();
     }
 
     void Update()
     {
-        HandleBlocking();
-        HandleAttacking();
-        attackCooldown -= Time.deltaTime;
+        HandleBlockInput();
+        HandleAttackInput();
+
+        UpdateAttackTimer();
+        UpdateBlockCooldown();
     }
 
-    void HandleBlocking()
+    void HandleBlockInput()
     {
-        bool blocking = Input.GetMouseButton(1) && !isAttacking;
-        animator.SetBool("isBlock", blocking);
-    }
-
-    void HandleAttacking()
-    {
-        AnimatorStateInfo state = animator.GetCurrentAnimatorStateInfo(0);
-
-        // ✅ While in Attack1
-        if (state.IsName("Attack1"))
+        if (Input.GetMouseButton(1) && !isAttacking)
         {
-            isAttacking = true;
-            animator.SetBool("isAttacking", true);
-
-            float t = state.normalizedTime;
-            inComboWindow = t >= comboWindowStart && t <= comboWindowEnd;
-
-            if (inComboWindow && queuedAttack)
+            if (!isBlocking)
             {
-                animator.SetTrigger("Attack2Trigger");
-                queuedAttack = false;
-                currentAttack = 2;
+                isBlocking = true;
+                animator.SetBool("isBlock", true);
+                if (health != null) health.isBlocking = true;
+                Debug.Log("Started Blocking");
             }
-
-            if (t > 1f && !queuedAttack)
-                ResetAttack();
         }
-
-        // ✅ While in Attack2
-        else if (state.IsName("Attack2"))
+        else if (isBlocking)
         {
-            isAttacking = true;
-            animator.SetBool("isAttacking", true);
-
-            if (state.normalizedTime > 1f)
-                ResetAttack();
+            isBlocking = false;
+            blockCooldownTimer = blockAttackLockout;
+            animator.SetBool("isBlock", false);
+            if (health != null) health.isBlocking = false;
+            Debug.Log("Stopped Blocking, starting lockout");
         }
+    }
 
-        // ✅ Not in any attack state
-        else if (!queuedAttack)
-        {
-            isAttacking = false;
-            animator.SetBool("isAttacking", false);
-            currentAttack = 0;
-        }
-
-        // ✅ Input: Mouse 1
+    void HandleAttackInput()
+    {
         if (Input.GetMouseButtonDown(0))
         {
-            if (!isAttacking && attackCooldown <= 0f)
+            if (isBlocking || blockCooldownTimer > 0f)
             {
-                animator.SetTrigger("Attack1Trigger");
-                animator.SetBool("isAttacking", true);
-                isAttacking = true;
-                currentAttack = 1;
-                attackCooldown = attackDelay;
+                Debug.Log("Attack blocked due to active block or cooldown");
+                return;
             }
-            else if (currentAttack == 1 && inComboWindow)
+
+            if (!isAttacking && attackCooldownTimer <= 0f)
             {
-                queuedAttack = true;
+                TriggerAttack1();
+            }
+            else if (isAttacking && !isInAttack2)
+            {
+                queuedAttack2 = true;
+                Debug.Log("Attack2 queued");
             }
         }
     }
 
-    void ResetAttack()
+    void UpdateAttackTimer()
+    {
+        if (!isAttacking) return;
+
+        attackCooldownTimer -= Time.deltaTime;
+
+        if (attackCooldownTimer <= 0f)
+        {
+            if (queuedAttack2)
+            {
+                TriggerAttack2();
+            }
+            else
+            {
+                ResetAttackState();
+            }
+        }
+    }
+
+    void UpdateBlockCooldown()
+    {
+        if (blockCooldownTimer > 0f)
+        {
+            blockCooldownTimer -= Time.deltaTime;
+        }
+    }
+
+    void TriggerAttack1()
+    {
+        animator.SetTrigger("Attack1Trigger");
+        isAttacking = true;
+        isInAttack2 = false;
+        queuedAttack2 = false;
+        attackCooldownTimer = attack1Duration;
+
+        if (weaponHitbox != null) weaponHitbox.EnableHitbox();
+
+        Debug.Log("Attack1 triggered");
+    }
+
+    void TriggerAttack2()
+    {
+        animator.SetTrigger("Attack2Trigger");
+        isInAttack2 = true;
+        queuedAttack2 = false;
+        attackCooldownTimer = attack2Duration;
+
+        if (weaponHitbox != null) weaponHitbox.EnableHitbox();
+
+        Debug.Log("Attack2 triggered");
+    }
+
+    void ResetAttackState()
     {
         isAttacking = false;
-        queuedAttack = false;
-        inComboWindow = false;
-        currentAttack = 0;
-        attackCooldown = attackDelay;
+        isInAttack2 = false;
+        queuedAttack2 = false;
+        attackCooldownTimer = 0f;
 
-        animator.SetBool("isAttacking", false);
+        if (weaponHitbox != null) weaponHitbox.DisableHitbox();
+
+        Debug.Log("Attack reset");
     }
 }

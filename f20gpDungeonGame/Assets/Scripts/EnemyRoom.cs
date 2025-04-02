@@ -4,11 +4,13 @@ using System.Collections.Generic;
 public class EnemyRoom : MonoBehaviour
 {
     [Header("Settings")]
-    public float doorSearchRadius = 33f;
+    public float doorSearchRadius = 33f;    
+    public Transform doorSearchOrigin; 
 
     private List<EnemyFSM> trackedEnemies = new List<EnemyFSM>();
     private List<WeepingAngel> weepingAngels = new List<WeepingAngel>();
-    private List<GameObject> doorsInRoom = new List<GameObject>();
+    [Header("Debug View")]
+    public LinkedList<GameObject> doorsInRoom = new LinkedList<GameObject>();
 
     private bool enemiesCleared = false;
 
@@ -22,7 +24,6 @@ public class EnemyRoom : MonoBehaviour
     {
         if (enemiesCleared) return;
 
-        // Clean up dead enemies
         trackedEnemies.RemoveAll(e => e == null);
 
         if (trackedEnemies.Count == 0)
@@ -38,21 +39,22 @@ public class EnemyRoom : MonoBehaviour
 
             foreach (GameObject door in doorsInRoom)
             {
-                door.SendMessage("OpenDoor", SendMessageOptions.DontRequireReceiver);
+                if (door != null)
+                    door.SendMessage("OpenDoor", SendMessageOptions.DontRequireReceiver);
             }
         }
     }
 
-    private List<GameObject> FindNearbyDoors()
+    private LinkedList<GameObject> FindNearbyDoors()
     {
-        List<GameObject> doors = new List<GameObject>();
-        Vector3 center = transform.position;
+        LinkedList<GameObject> doors = new LinkedList<GameObject>();
+        Vector3 origin = doorSearchOrigin != null ? doorSearchOrigin.position : transform.position;
 
         foreach (GameObject go in GameObject.FindGameObjectsWithTag("Door"))
         {
-            if (Vector3.Distance(center, go.transform.position) < doorSearchRadius)
+            if (Vector3.Distance(origin, go.transform.position) < doorSearchRadius)
             {
-                doors.Add(go);
+                doors.AddLast(go);
             }
         }
 
@@ -78,6 +80,7 @@ public class EnemyRoom : MonoBehaviour
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, doorSearchRadius);
+        Vector3 origin = doorSearchOrigin != null ? doorSearchOrigin.position : transform.position;
+        Gizmos.DrawWireSphere(origin, doorSearchRadius);
     }
 }

@@ -53,13 +53,13 @@ public class EnemyFSM : MonoBehaviour, IKillable
             {
                 Bounds bounds = meshRenderer.bounds;
 
-                Vector3 size = col.size;
-                size.y = bounds.size.y; // Set only height
-                col.size = size;
+                // Vector3 size = col.size;
+                // size.y = bounds.size.y; // Set only height
+                // col.size = size;
 
-                Vector3 center = col.center;
-                center.y = bounds.center.y - transform.position.y;
-                col.center = center;
+                // Vector3 center = col.center;
+                // center.y = bounds.center.y - transform.position.y;
+                // col.center = center;
             }
         }
 

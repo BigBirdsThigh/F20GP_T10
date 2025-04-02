@@ -4,8 +4,11 @@ using System.Collections;
 public class Health : MonoBehaviour
 {
     [Header("Health Settings")]
-    public int maxHealth = 100;
-    public int currentHealth;
+    public float maxHealth = 100f;
+    public float currentHealth;
+    [Header("State Flags")]
+    public bool isBlocking = false;
+
     private IKillable deathHandler;
 
     [Header("Damage Feedback")]
@@ -31,8 +34,15 @@ public class Health : MonoBehaviour
         }
     }
 
-    public void TakeDamage(int amount)
+    public void TakeDamage(float amount)
     {
+        // Block check
+        if (isBlocking)
+        {
+            Debug.Log($"{gameObject.name} blocked the attack!");
+            return;
+        }
+
         currentHealth -= amount;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
 
@@ -50,6 +60,7 @@ public class Health : MonoBehaviour
         }
     }
 
+
     private IEnumerator FlashMaterial()
     {
         matInstance.color = flashColor;
@@ -61,13 +72,35 @@ public class Health : MonoBehaviour
     {
         Debug.Log($"{gameObject.name} has died.");
 
+        bool usedExternalKill = false;
+
+        // Check for IKillable on this object
         if (deathHandler != null)
+        {
             deathHandler.Die();
-
-        if (destroyOnDeath)
-            Destroy(gameObject);
+            usedExternalKill = true;
+        }
+        // Else look for IKillable on parent
+        else if (transform.parent != null)
+        {
+            IKillable parentKillable = transform.parent.GetComponent<IKillable>();
+            if (parentKillable != null)
+            {
+                parentKillable.Die();
+                usedExternalKill = true;
+            }
+            else
+            {
+                // As a fallback, call parent's Health.Die if it exists
+                Health parentHealth = transform.parent.GetComponent<Health>();
+                if (parentHealth != null && parentHealth != this) // avoid recursion
+                {
+                    parentHealth.TakeDamage(currentHealth); // Force death
+                    usedExternalKill = true;
+                }
+            }
+        }
     }
-
     public void Heal(int amount)
     {
         currentHealth += amount;

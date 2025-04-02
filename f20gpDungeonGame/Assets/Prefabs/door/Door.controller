@@ -7,7 +7,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Open Door Idle 0
+  m_Name: Open Door Idle
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -38,16 +38,16 @@ AnimatorStateMachine:
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: -5683044032513720102}
-    m_Position: {x: 40, y: 220, z: 0}
+    m_Position: {x: 10, y: 220, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -2845788033024336623}
-    m_Position: {x: 300, y: 120, z: 0}
+    m_Position: {x: 380, y: 220, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 3440725964081150775}
-    m_Position: {x: 530, y: 220, z: 0}
+    m_Position: {x: 380, y: 430, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 8038544036268120903}
-    m_Position: {x: 280, y: 330, z: 0}
+    m_Position: {x: 10, y: 430, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
@@ -93,9 +93,9 @@ AnimatorStateTransition:
   m_PrefabAsset: {fileID: 0}
   m_Name: 
   m_Conditions:
-  - m_ConditionMode: 6
-    m_ConditionEvent: doorState
-    m_EventTreshold: 3
+  - m_ConditionMode: 2
+    m_ConditionEvent: open
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -2845788033024336623}
   m_Solo: 0
@@ -121,6 +121,12 @@ AnimatorController:
   m_AnimatorParameters:
   - m_Name: doorState
     m_Type: 3
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 9100000}
+  - m_Name: open
+    m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
@@ -244,8 +250,8 @@ AnimatorStateTransition:
   m_PrefabAsset: {fileID: 0}
   m_Name: 
   m_Conditions:
-  - m_ConditionMode: 6
-    m_ConditionEvent: doorState
+  - m_ConditionMode: 1
+    m_ConditionEvent: open
     m_EventTreshold: 1
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 8038544036268120903}

@@ -3,11 +3,12 @@ using UnityEngine;
 public class WeaponHitbox : MonoBehaviour
 {
     [Header("Damage Settings")]
-    public int damage = 1;
+    public float damage = 1f;
 
     private bool canHit = false;
     private bool hasHit = false;
     private Collider hitboxCollider;
+    public LayerMask ignoreLayer;
 
     private void Awake()
     {
@@ -20,10 +21,10 @@ public class WeaponHitbox : MonoBehaviour
     {
         Debug.Log($"Trigger entered with: {other.name}");
 
-        // Ignore anything on the "Enemy" layer
-        if (other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+        // Ignore if other object is in the ignored layer(s)
+        if (((1 << other.gameObject.layer) & ignoreLayer.value) != 0)
         {
-            Debug.Log($"{other.name} is on Enemy layer. Ignored.");
+            Debug.Log($"{other.name} is on ignored layer. Ignored.");
             return;
         }
 

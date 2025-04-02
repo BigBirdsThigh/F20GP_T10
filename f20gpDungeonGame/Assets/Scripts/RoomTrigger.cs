@@ -4,7 +4,8 @@ using System.Collections.Generic;
 public class RoomTrigger : MonoBehaviour
 {
     private bool hasTriggered = false;
-    private List<GameObject> doorsInRoom = new List<GameObject>();
+    [Header("Debug View")]
+    public LinkedList<GameObject> doorsInRoom = new LinkedList<GameObject>();
 
     [Header("Enemy Tracking")]
     public List<EnemyFSM> activeEnemies = new List<EnemyFSM>();
@@ -26,7 +27,7 @@ public class RoomTrigger : MonoBehaviour
         }
 
         // Find doors nearby
-        doorsInRoom = FindNearbyDoors(transform.parent);
+        doorsInRoom = find_doors();
 
         foreach (GameObject door in doorsInRoom)
         {
@@ -73,16 +74,14 @@ public class RoomTrigger : MonoBehaviour
             activeAngels.Add(angel);
     }
 
-    private List<GameObject> FindNearbyDoors(Transform roomTransform)
-    {
-        List<GameObject> doors = new List<GameObject>();
-        float reqDistance = 33f;
-
-        foreach (GameObject go in GameObject.FindGameObjectsWithTag("Door"))
-        {
-            if (Vector3.Distance(roomTransform.position, go.transform.position) < reqDistance)
+    private LinkedList<GameObject> find_doors(){
+        LinkedList<GameObject> doors = new LinkedList<GameObject>();
+        int req_distance = 33;
+        
+        foreach (GameObject go in GameObject.FindGameObjectsWithTag("Door")) {
+            if (Vector3.Distance(this.gameObject.transform.position, go.transform.position) < req_distance)
             {
-                doors.Add(go);
+                    doors.AddLast(go);
             }
         }
 

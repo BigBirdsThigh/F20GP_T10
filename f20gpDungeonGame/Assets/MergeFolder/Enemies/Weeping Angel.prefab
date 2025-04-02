@@ -70,6 +70,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 2
+  ignoreLayer:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!54 &7939865906987918234
 Rigidbody:
   m_ObjectHideFlags: 0
