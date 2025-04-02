@@ -9,6 +9,9 @@ TagManager:
   - DoorWall
   - Door
   - TelePad
+  - heart1
+  - heart2
+  - heart3
   layers:
   - Default
   - TransparentFX
