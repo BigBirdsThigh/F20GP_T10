@@ -24,4 +24,9 @@ public class UI : MonoBehaviour
         keyCount++;
         keyText.text = (keyCount + "/3");
     }
+
+    public int getKeyCount()
+    {
+        return keyCount;
+    }
 }
