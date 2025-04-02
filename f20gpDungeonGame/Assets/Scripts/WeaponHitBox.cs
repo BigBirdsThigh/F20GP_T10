@@ -3,7 +3,7 @@ using UnityEngine;
 public class WeaponHitbox : MonoBehaviour
 {
     [Header("Damage Settings")]
-    public float damage = 1f;
+    public int damage = 1;
 
     private bool canHit = false;
     private bool hasHit = false;
