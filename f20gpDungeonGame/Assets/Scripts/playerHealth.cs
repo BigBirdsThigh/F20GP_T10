@@ -10,8 +10,8 @@ public class playerHealth : MonoBehaviour
 
     public Sprite fullheart, halfheart, emptyheart;
 
-    private int health;
-    private int prevHealth;
+    private float health;
+    private float prevHealth;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
