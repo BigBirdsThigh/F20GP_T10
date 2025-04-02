@@ -4845,6 +4845,7 @@ GameObject:
   - component: {fileID: 8130698606200440296}
   - component: {fileID: 7945329887540938178}
   - component: {fileID: -81207524667994789}
+  - component: {fileID: 7105211090095019078}
   m_Layer: 0
   m_Name: FireTile
   m_TagString: FireTile
@@ -4933,3 +4934,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1af9d68de619caa45bff5c01c4851218, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!65 &7105211090095019078
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7386541916493297480}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.02, y: 0.019999996, z: 0.03325815}
+  m_Center: {x: 0, y: -5.8878046e-18, z: 0.05}

@@ -4,6 +4,8 @@ using UnityEngine.UI;
 public class playerHealth : MonoBehaviour
 {
     //right, middle, left. Heart1 is 1hp or 0.5hp
+
+    public Canvas UI;
     public Image heart1, heart2, heart3;
 
     public Sprite fullheart, halfheart, emptyheart;
@@ -16,7 +18,12 @@ public class playerHealth : MonoBehaviour
     {
         prevHealth = health;
 
-        //flip the hearts so it looks better teehee
+
+        heart1 = GameObject.FindGameObjectWithTag("heart1").GetComponent<Image>();
+        heart2 = GameObject.FindGameObjectWithTag("heart2").GetComponent<Image>();
+        heart3 = GameObject.FindGameObjectWithTag("heart3").GetComponent<Image>();
+
+        Debug.Log(heart1);
     }
 
     // Update is called once per frame
