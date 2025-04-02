@@ -12,6 +12,7 @@ TagManager:
   - heart1
   - heart2
   - heart3
+  - key
   layers:
   - Default
   - TransparentFX
