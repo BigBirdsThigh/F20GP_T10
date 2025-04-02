@@ -48,7 +48,7 @@ public class UI_menus : MonoBehaviour
 
         if(isGameEnded)
         {
-            ShowWinLose();
+            ShowWinLose(hasWon);
         }
 
         if(Input.GetKeyDown(KeyCode.T))
@@ -66,7 +66,7 @@ public class UI_menus : MonoBehaviour
         }
     }
 
-    void ShowWinLose()
+    public void ShowWinLose(bool hasWon)
     {
         if(!hasPlayedWinLoseSound)
         {
@@ -83,6 +83,7 @@ public class UI_menus : MonoBehaviour
             hasPlayedWinLoseSound = true; //sound has played out
         }
     }
+
 
     void PauseMenuToggle()
     {
