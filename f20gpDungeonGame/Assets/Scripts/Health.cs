@@ -124,4 +124,9 @@ public class Health : MonoBehaviour
     {
         return currentHealth <= 0;
     }
+
+    public float getHealth()
+    {
+        return currentHealth;
+    }
 }

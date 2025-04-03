@@ -89,7 +89,15 @@ public class UI_menus : MonoBehaviour
     {
         //if the game hasnt ended, and the player presses the escape key, and its not already paused, switch pause boolean
         if (!isGameEnded && Input.GetKeyDown(KeyCode.Escape))
-        {
+        {   
+            if (isPaused == true) {
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
+            } else {
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+            }
+            
             isPaused = !isPaused;
         }
     }
@@ -110,6 +118,8 @@ public class UI_menus : MonoBehaviour
 
     public void Button_ReturnToGame()
     {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
         isPaused = false;
         Time.timeScale = 1f; //unfreeze the game
         PlaySlash();

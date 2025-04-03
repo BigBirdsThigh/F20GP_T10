@@ -4372,6 +4372,7 @@ GameObject:
   - component: {fileID: 7090685289776536464}
   - component: {fileID: 1009668644606228210}
   - component: {fileID: 4414385421209938757}
+  - component: {fileID: 4988575192539041962}
   m_Layer: 0
   m_Name: floorTile_1x1_noBlood
   m_TagString: Ground
@@ -4462,13 +4463,25 @@ MeshCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 5
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -462981019419857548, guid: e7ba714180621d9458088bfa5220c5e1, type: 3}
+--- !u!114 &4988575192539041962
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3275483675880564417}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf134f247a462e84ebc8625656655c3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3582702779853978366
 GameObject:
   m_ObjectHideFlags: 0
