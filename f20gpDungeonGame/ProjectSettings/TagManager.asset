@@ -13,6 +13,8 @@ TagManager:
   - heart2
   - heart3
   - key
+  - Move1
+  - Move2
   layers:
   - Default
   - TransparentFX

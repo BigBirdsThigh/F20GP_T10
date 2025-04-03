@@ -11,13 +11,14 @@ public class DungeonGen : MonoBehaviour
     private LinkedList<((int,int),(int,int))> bridges;
     private LinkedList<Room> rooms;
     private (int,int)[] adjacent_rooms = new (int,int)[4];
+    public Vector3 spawn_location;
 
     // Player
     public GameObject player;
     private GameObject playerInstance;
 
     // Room variables
-    static private int room_count = 11; // hardcoded uh oh
+    static private int room_count = 17; // hardcoded uh oh
     public GameObject Door_obj;
 
     public GameObject Enemy1x1;
@@ -88,36 +89,36 @@ public class DungeonGen : MonoBehaviour
 
         //test rooms
         Room1x1 = new Room("Room1x1", "1", 1, 1, Room1x1_obj);
-        possible_rooms[0] = Room1x1;
+        possible_rooms[0] = Room1x1; possible_rooms[1] = Room1x1;
         Room1x2 = new Room("Room1x2", "2", 1, 2, Room1x2_obj);
-        possible_rooms[1] = Room1x2;
+        possible_rooms[2] = Room1x2;
 
-
-        // enemy rooms
-        EnemyRoom1x1 = new Room("EnemyRoom1x1", "z", 1,1, Enemy1x1);
-        possible_rooms[9] = EnemyRoom1x1;
-        EnemyRoom1x2 = new Room("EnemyRoom1x2", "a", 1,2, Enemy1x2);
-        possible_rooms[10] = EnemyRoom1x2;
 
         //fire rooms
         Room1x1_Fire_1 = new Room("Room1x1_Fire_1", "3", 1, 1, Room1x1_Fire_1_obj);
-        possible_rooms[2] = Room1x1_Fire_1;
+        possible_rooms[3] = Room1x1_Fire_1;
         Room1x1_Fire_2 = new Room("Room1x1_Fire_2", "4", 1, 1, Room1x1_Fire_2_obj);
-        possible_rooms[3] = Room1x1_Fire_2;
+        possible_rooms[4] = Room1x1_Fire_2;
         Room1x2_Fire_1 = new Room("Room1x2_Fire_1", "5", 1, 2, Room1x2_Fire_1_obj);
-        possible_rooms[4] = Room1x2_Fire_1;
+        possible_rooms[5] = Room1x2_Fire_1;
         Room1x2_Fire_2 = new Room("Room1x2_Fire_2", "6", 1, 2, Room1x2_Fire_2_obj);
-        possible_rooms[5] = Room1x2_Fire_2;
+        possible_rooms[6] = Room1x2_Fire_2;
 
         //jump rooms
         JumpRoom1x1 = new Room("JumpRoom1x1", "j", 1, 1, JumpRoom1x1_obj);
-        possible_rooms[6] = JumpRoom1x1;
+        possible_rooms[7] = JumpRoom1x1; possible_rooms[8] = JumpRoom1x1;
         JumpRoom1x2 = new Room("JumpRoom1x2", "i", 1, 2, JumpRoom1x2_obj);
-        possible_rooms[7] = JumpRoom1x2;
+        possible_rooms[9] = JumpRoom1x2; possible_rooms[10] = JumpRoom1x2;
 
         //teleport room
         TeleportRoom = new Room("TeleportRoom", "t", 1, 1, TeleportRoom_obj);
-        possible_rooms[8] = TeleportRoom;
+        possible_rooms[11] = TeleportRoom; possible_rooms[12] = TeleportRoom;
+
+        // enemy rooms
+        EnemyRoom1x1 = new Room("EnemyRoom1x1", "z", 1,1, Enemy1x1);
+        possible_rooms[13] = EnemyRoom1x1; possible_rooms[14] = EnemyRoom1x1;
+        EnemyRoom1x2 = new Room("EnemyRoom1x2", "a", 1,2, Enemy1x2);
+        possible_rooms[15] = EnemyRoom1x2; possible_rooms[16] = EnemyRoom1x2;
 
         // create empty grid
         grid = new string[grid_height, grid_width];
@@ -257,6 +258,7 @@ public class DungeonGen : MonoBehaviour
             }
         }
 
+        spawn_location = getSpawnRoom();
         playerInstance = Instantiate(player, getSpawnRoom(), player.transform.rotation, this.transform);
 
         // list of key spawn locations
