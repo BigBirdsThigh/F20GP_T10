@@ -13,6 +13,9 @@ TagManager:
   - heart2
   - heart3
   - key
+  - Undefined
+  - UI
+  - Reflector
   layers:
   - Default
   - TransparentFX
