@@ -65,6 +65,8 @@ public class DungeonGen : MonoBehaviour
 
     void Start()
     {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
         generateDungeon();
     }
 
