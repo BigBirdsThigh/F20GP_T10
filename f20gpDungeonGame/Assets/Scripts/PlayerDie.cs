@@ -9,6 +9,8 @@ public class PlayerDie : MonoBehaviour, IKillable
         menu = FindObjectOfType<UI_menus>();
         menu.ShowWinLose(false);
         Destroy(gameObject); // destroy this object after triggering UI
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 
 }
