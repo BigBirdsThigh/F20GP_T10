@@ -13,8 +13,10 @@ TagManager:
   - heart2
   - heart3
   - key
-  - Move1
-  - Move2
+  - Undefined
+  - UI
+  - Reflector
+
   layers:
   - Default
   - TransparentFX

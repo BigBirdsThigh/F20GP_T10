@@ -105,6 +105,9 @@ public class WeepingAngel : MonoBehaviour
         Debug.Log($"[Angel] {name} frozen.");
         moveSpeed = 0f;
         rotationSpeed = 0f;
+        if (isAttacking){
+            swordHitbox.DisableHitbox();
+        }
         if (anim != null) anim.speed = 0f;
     }
 
@@ -113,6 +116,9 @@ public class WeepingAngel : MonoBehaviour
         Debug.Log($"[Angel] {name} unfrozen.");
         moveSpeed = originalMoveSpeed;
         rotationSpeed = originalRotationSpeed;
+        if(isAttacking){
+            swordHitbox.EnableHitbox();
+        }
         if (anim != null) anim.speed = 1f;
     }
 

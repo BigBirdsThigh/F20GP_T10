@@ -65,6 +65,7 @@ public class DungeonGen : MonoBehaviour
 
     void Start()
     {
+
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         generateDungeon();
@@ -83,6 +84,7 @@ public class DungeonGen : MonoBehaviour
 
         // Delete previous dungeon if there is one
         deleteDungeon();
+
 
         //Door_obj.GetComponent<Animator>().Play("Idle_closedDoor");
 
@@ -239,7 +241,7 @@ public class DungeonGen : MonoBehaviour
         {
             //Quaternion quat = Quaternion.identity;
             //quat.y = room.Rotation;
-            Instantiate(room.Obj, new Vector3(room.Origin.Item2 * 45, 0, room.Origin.Item1 * -45), Quaternion.Euler(new Vector3(0, room.Rotation, 0)), this.transform);
+            Instantiate(room.Obj, new Vector3(room.Origin.Item2 * 45, 0, room.Origin.Item1 * -45), Quaternion.Euler(new Vector3(0, room.Rotation, 0)));
         }
 
         foreach(((int,int),(int,int)) br in bridges) { 
@@ -250,7 +252,7 @@ public class DungeonGen : MonoBehaviour
             if (br.Item1.Item2 != br.Item2.Item2) { // if x coords are not equal door must be rotated the other way
                 door_rotation = 0;
             }
-            Instantiate(Door_obj, door_pos, Quaternion.Euler(new Vector3(0, door_rotation, 0)), this.transform);
+            Instantiate(Door_obj, door_pos, Quaternion.Euler(new Vector3(0, door_rotation, 0)));
 
             foreach (GameObject go in GameObject.FindGameObjectsWithTag("DoorWall")) {
                 if (Vector3.Distance(door_pos, go.transform.position) < 5)
@@ -260,8 +262,10 @@ public class DungeonGen : MonoBehaviour
             }
         }
 
+
         spawn_location = getSpawnRoom();
         playerInstance = Instantiate(player, getSpawnRoom(), player.transform.rotation, this.transform);
+
 
         // list of key spawn locations
         HashSet<int> keyLocations = new HashSet<int>();
@@ -282,18 +286,12 @@ public class DungeonGen : MonoBehaviour
         {
             if (keyLocations.Contains(index))
             {
-                Instantiate(key_obj, new Vector3(current.Value.Origin.Item2 * 45, 0, current.Value.Origin.Item1 * -45), key_obj.transform.rotation, this.transform);
+                Instantiate(key_obj, new Vector3(current.Value.Origin.Item2 * 45, 0, current.Value.Origin.Item1 * -45), key_obj.transform.rotation);
                 //Debug.Log("Key Spawned at: " + index);
                 keysSpawned++;
             }
             current = current.Next;
             index++;
-        }
-    }
-
-    public void deleteDungeon(){
-        foreach (Transform child in this.transform) {
-            GameObject.Destroy(child.gameObject);
         }
     }
 
@@ -307,6 +305,11 @@ public class DungeonGen : MonoBehaviour
         return new Vector3(rooms.First.Value.Origin.Item2 * 45, 1.5f, rooms.First.Value.Origin.Item1 * -45);
     }
 
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
 
     private void PrintGrid(string[,] grid)
     {

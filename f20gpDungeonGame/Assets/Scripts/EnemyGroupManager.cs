@@ -64,6 +64,21 @@ public class EnemyGroupManager : MonoBehaviour
 
     void Update()
     {
+
+        // Auto-assign player if not manually set
+        if (player == null)
+        {
+            GameObject found = GameObject.FindGameObjectWithTag("Player");
+            if (found != null)
+            {
+                player = found.transform;
+            }
+            else
+            {
+                Debug.LogWarning("[EnemyGroupManager] No GameObject tagged 'Player' found in the scene.");
+            }
+        }
+        
         PlacementResult result = PlaceNodes();
 
         if (result.success)

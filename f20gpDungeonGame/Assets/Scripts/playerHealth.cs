@@ -18,6 +18,8 @@ public class playerHealth : MonoBehaviour
     {
         prevHealth = health;
 
+        GameObject UIObject = GameObject.FindWithTag("UI");
+        UI = UIObject.GetComponent<Canvas>();
 
         heart1 = GameObject.FindGameObjectWithTag("heart1").GetComponent<Image>();
         heart2 = GameObject.FindGameObjectWithTag("heart2").GetComponent<Image>();

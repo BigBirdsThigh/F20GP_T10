@@ -68,6 +68,11 @@ public class Health : MonoBehaviour
         matInstance.color = originalColor;
     }
 
+
+    public float getHealth(){
+        return currentHealth;
+    }
+
     private void Die()
     {
         Debug.Log($"{gameObject.name} has died.");
