@@ -3890,7 +3890,7 @@ MonoBehaviour:
   grid_width: 5
   grid_height: 5
   spawn_location: {x: 0, y: 0, z: 0}
-  player: {fileID: 7599801456244420685, guid: ca9a3b1d9eabf7647badbf341fa6c41f, type: 3}
+  player: {fileID: 5724980429571901817, guid: 130f4fa59b0f27b4f8ab3d6c18f12cfe, type: 3}
   Door_obj: {fileID: 1700435538284364883, guid: eb4467451ecb9454ba54914eaa97c41e, type: 3}
   Enemy1x1: {fileID: 3150449444241244047, guid: bba5be2a59902794e82b7d89fb4712d6, type: 3}
   Enemy1x2: {fileID: 2851638136576663969, guid: 1be285dea20d05442832f3aeabbce50a, type: 3}
@@ -3901,6 +3901,8 @@ MonoBehaviour:
   Room1x1_Fire_2_obj: {fileID: 2866644619536332469, guid: e8954ffd156c9e94e84511930873c301, type: 3}
   Room1x2_Fire_1_obj: {fileID: 6335035978308338009, guid: 5d6d2ac2b52ce574e8c48558a0096412, type: 3}
   Room1x2_Fire_2_obj: {fileID: 5904146274192457249, guid: aaf582085cdb89d4fa7a70cbf054c4d9, type: 3}
+  LaserRoom1_obj: {fileID: 6238043844276289754, guid: 313f228f5aba89145bb4de19d24f4822, type: 3}
+  LaserRoom2_obj: {fileID: 399253909721847079, guid: 6a060385d482e9841a9f151a1ccaaaf1, type: 3}
   JumpRoom1x1_obj: {fileID: 4071525565695726265, guid: 74443954eead47a4180b8468c22f2026, type: 3}
   JumpRoom1x2_obj: {fileID: 1914749515237400370, guid: da9cb126e92393549a8557cf1386a9e3, type: 3}
   TeleportRoom_obj: {fileID: 6571760971330442896, guid: c21228002c06d2f4a8900a1573a3cd0b, type: 3}
