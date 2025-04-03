@@ -48,13 +48,14 @@ MonoBehaviour:
   positionPlaceholderPrefab: {fileID: 4529200953988332419, guid: 16e59934c66edc04b8e75d4250cdd3a5, type: 3}
   obstacleLayerMask:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 1
   minSpacingBetweenNodes: 2.5
   baseRingRadius: 5
   radiusIncrement: 0.2
   maxRingRadius: 15
   radiusLerpSpeed: 1
   framesRequiredToShrink: 10
+  showVisualNodes: 0
   attackRange: 1.5
   minAttackDelay: 0.5
   maxAttackDelay: 2

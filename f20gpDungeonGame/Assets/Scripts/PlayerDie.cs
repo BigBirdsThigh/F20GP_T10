@@ -4,8 +4,11 @@ public class PlayerDie : MonoBehaviour, IKillable
 {
     private UI_menus menu;
     // this script solely just handles player death and loss condition
-    public void Die(){
+    public void Die()
+    {
         menu = FindObjectOfType<UI_menus>();
         menu.ShowWinLose(false);
+        Destroy(gameObject); // destroy this object after triggering UI
     }
+
 }

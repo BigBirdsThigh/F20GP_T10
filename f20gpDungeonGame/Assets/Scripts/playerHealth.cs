@@ -3,8 +3,6 @@ using UnityEngine.UI;
 
 public class playerHealth : MonoBehaviour
 {
-    //right, middle, left. Heart1 is 1hp or 0.5hp
-
     public Canvas UI;
     public Image heart1, heart2, heart3;
 
@@ -13,22 +11,33 @@ public class playerHealth : MonoBehaviour
     private float health;
     private float prevHealth;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         prevHealth = health;
 
+        // Find the UI Canvas by tag
         GameObject UIObject = GameObject.FindWithTag("UI");
-        UI = UIObject.GetComponent<Canvas>();
+        if (UIObject != null)
+        {
+            UI = UIObject.GetComponent<Canvas>();
+            
+            //  search for heart UI elements inside the Canvas
+            foreach (Image img in UI.GetComponentsInChildren<Image>(true)) // 'true' includes inactive objects
+            {
+                if (img.CompareTag("heart1")) heart1 = img;
+                else if (img.CompareTag("heart2")) heart2 = img;
+                else if (img.CompareTag("heart3")) heart3 = img;
+            }
+        }
+        else
+        {
+            Debug.LogError("UI Canvas not found with tag 'UI'");
+        }
 
-        heart1 = GameObject.FindGameObjectWithTag("heart1").GetComponent<Image>();
-        heart2 = GameObject.FindGameObjectWithTag("heart2").GetComponent<Image>();
-        heart3 = GameObject.FindGameObjectWithTag("heart3").GetComponent<Image>();
-
-        Debug.Log(heart1);
+        // Check assignments
+        Debug.Log($"Heart1: {heart1}, Heart2: {heart2}, Heart3: {heart3}");
     }
 
-    // Update is called once per frame
     void Update()
     {
         health = gameObject.GetComponent<Health>().getHealth();
@@ -41,37 +50,31 @@ public class playerHealth : MonoBehaviour
                     heart2.sprite = emptyheart;
                     heart3.sprite = emptyheart;
                     break;
-
                 case 1:
                     heart1.sprite = halfheart;
                     heart2.sprite = emptyheart;
                     heart3.sprite = emptyheart;
                     break;
-
                 case 2:
                     heart1.sprite = fullheart;
                     heart2.sprite = emptyheart;
                     heart3.sprite = emptyheart;
                     break;
-
                 case 3:
                     heart1.sprite = fullheart;
                     heart2.sprite = halfheart;
                     heart3.sprite = emptyheart;
                     break;
-
                 case 4:
                     heart1.sprite = fullheart;
                     heart2.sprite = fullheart;
                     heart3.sprite = emptyheart;
                     break;
-
                 case 5:
                     heart1.sprite = fullheart;
                     heart2.sprite = fullheart;
                     heart3.sprite = halfheart;
                     break;
-
                 case 6:
                     heart1.sprite = fullheart;
                     heart2.sprite = fullheart;

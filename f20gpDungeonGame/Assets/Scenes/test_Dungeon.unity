@@ -1797,7 +1797,7 @@ MonoBehaviour:
   grid_width: 5
   grid_height: 5
   spawn_location: {x: 0, y: 0, z: 0}
-  player: {fileID: 7599801456244420685, guid: ca9a3b1d9eabf7647badbf341fa6c41f, type: 3}
+  player: {fileID: 5724980429571901817, guid: 130f4fa59b0f27b4f8ab3d6c18f12cfe, type: 3}
   Door_obj: {fileID: 1700435538284364883, guid: eb4467451ecb9454ba54914eaa97c41e, type: 3}
   Enemy1x1: {fileID: 3150449444241244047, guid: bba5be2a59902794e82b7d89fb4712d6, type: 3}
   Enemy1x2: {fileID: 2851638136576663969, guid: 1be285dea20d05442832f3aeabbce50a, type: 3}

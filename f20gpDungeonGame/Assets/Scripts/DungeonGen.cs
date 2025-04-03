@@ -18,7 +18,7 @@ public class DungeonGen : MonoBehaviour
     private GameObject playerInstance;
 
     // Room variables
-    static private int room_count = 17; // hardcoded uh oh
+    static private int room_count = 21; // hardcoded uh oh
     public GameObject Door_obj;
 
     public GameObject Enemy1x1;
@@ -44,6 +44,14 @@ public class DungeonGen : MonoBehaviour
     public GameObject Room1x2_Fire_2_obj;
     private Room Room1x2_Fire_2;
 
+    // laser rooms
+    public GameObject LaserRoom1_obj;
+    private Room LaserRoom1;
+    private Room LaserRoom2;
+    public GameObject LaserRoom2_obj;
+    // private Room LaserRoom3;
+    // private Room LaserRoom4;
+
     // jump rooms
     public GameObject JumpRoom1x1_obj;
     private Room JumpRoom1x1;
@@ -66,8 +74,8 @@ public class DungeonGen : MonoBehaviour
     void Start()
     {
 
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        // Cursor.lockState = CursorLockMode.Locked;
+        // Cursor.visible = false;
         generateDungeon();
     }
 
@@ -79,7 +87,11 @@ public class DungeonGen : MonoBehaviour
         }
         */
     }
-
+public void deleteDungeon(){
+        foreach (Transform child in this.transform) {
+            GameObject.Destroy(child.gameObject);
+        }
+    }
     public void generateDungeon() {
 
         // Delete previous dungeon if there is one
@@ -107,6 +119,18 @@ public class DungeonGen : MonoBehaviour
         possible_rooms[5] = Room1x2_Fire_1;
         Room1x2_Fire_2 = new Room("Room1x2_Fire_2", "6", 1, 2, Room1x2_Fire_2_obj);
         possible_rooms[6] = Room1x2_Fire_2;
+
+        // laser rooms
+        LaserRoom1 = new Room("LaserRoom1", "q", 1, 1, LaserRoom1_obj);
+        possible_rooms[17] = LaserRoom1;
+        LaserRoom2 = new Room("LaserRoom1", "x", 1, 1, LaserRoom2_obj);
+        possible_rooms[18] = LaserRoom1;
+        possible_rooms[19] = LaserRoom2;
+        possible_rooms[20] = LaserRoom2;
+        // LaserRoom3 = new Room("LaserRoom2", "y", 1, 1, LaserRoom2_obj);
+        // possible_rooms[18] = LaserRoom3;
+        // LaserRoom4 = new Room("LaserRoom2", "v", 1, 1, LaserRoom2_obj);
+        // possible_rooms[19] = LaserRoom4;
 
         //jump rooms
         JumpRoom1x1 = new Room("JumpRoom1x1", "j", 1, 1, JumpRoom1x1_obj);
@@ -306,10 +330,10 @@ public class DungeonGen : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
+    // void Update()
+    // {
         
-    }
+    // }
 
     private void PrintGrid(string[,] grid)
     {
